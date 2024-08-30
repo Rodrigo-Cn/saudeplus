@@ -1,12 +1,8 @@
-from django import template
-from django.template import loader
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Medico
 
-def home(request, medico_id):
-    medico = Medico.objects.get(pk=medico_id)
-    nome = medico.nome
-    template = loader.get_template("medicos/home.html")
-    context = {'medico':medico, 'nome':nome}
-    return HttpResponse(template.render(context,request))
+def home(request):
+    user = request.user
+    medico = get_object_or_404(Medico, pk=user.id)
+    context = {'medico': medico, 'nome': medico.nome}
+    return render(request, 'medicos/home.html', context)

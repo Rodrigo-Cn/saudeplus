@@ -3,8 +3,8 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
+    path('', include('medicos.urls')),
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name='registration/login.html'), name="login"),
-    path('medico/', include('medicos.urls')),
-
+    path('usuario/', include('usuarios.urls')),
+    path('conta/', include('django.contrib.auth.urls')),
 ]
