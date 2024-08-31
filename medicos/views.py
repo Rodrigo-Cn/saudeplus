@@ -1,7 +1,8 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Medico
 from .forms import MedicoCreationForm, MedicoEditForm
+from django.contrib import messages
 
 """def home(request):
     user = request.user
@@ -45,8 +46,8 @@ def add(request):
             #user.save()
             #group = Group.objects.get(id=2)
             #user.groups.add(group)
-            return HttpResponseRedirect('/medico/read')
+        messages.success(request, "Médico cadastrado com sucesso")
+        return redirect('home-adm')
     else:
-            form = MedicoCreationForm()
-    return render(request, 'medicos/add.html', {'form':form})
+        return redirect('home-adm')
 
