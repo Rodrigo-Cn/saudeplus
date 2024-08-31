@@ -2,6 +2,10 @@
 
     {% block content %}
 
-    
+        <form action="{% url 'medico-add' %}" method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Salvar" class="btn btn-primary btn-user btn-block">
+        </form>
 
     {% endblock %}

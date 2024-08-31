@@ -1,5 +1,7 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from .models import Medico
+from .forms import MedicoCreationForm, MedicoEditForm
 
 """def home(request):
     user = request.user
@@ -32,3 +34,19 @@ def detail(request, medico_id):
     context = {'medico_detail': medico_detail}
     print(medico_detail.foto_perfil)
     return render(request, 'medicos/detail.html', context) 
+
+#TIRAR OS COMENTÁRIOS QUANDO OS GRUPOS ESTIVEREM PRONTOS
+def add(request):
+    if request.method == 'POST':
+        form = MedicoCreationForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            #user = form.save(commit=False)
+            #user.save()
+            #group = Group.objects.get(id=2)
+            #user.groups.add(group)
+            return HttpResponseRedirect('/medico/read')
+    else:
+            form = MedicoCreationForm()
+    return render(request, 'medicos/add.html', {'form':form})
+
