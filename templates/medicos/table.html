@@ -1,0 +1,69 @@
+{% extends '_base.html' %}
+
+    {% block content %}
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Tabela de Médicos</h1>
+        <p class="mb-4">Utilize esta tabela para visualizar, editar ou excluir os médicos listados.</p>
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Médicos</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>CRM</th>
+                                <th>Telefone</th>
+                                <th>Filiação</th>
+                                <th>Especialidade</th>
+                                <th style="color:green; text-align: center; vertical-align: middle;">Visualizar</th>
+                                <th style="color:blue; text-align: center; vertical-align: middle;">Editar</th>
+                                <th style="color:red; text-align: center; vertical-align: middle;">Excluir</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Nome</th>
+                                <th>CRM</th>
+                                <th>Telefone</th>
+                                <th>Filiação</th>
+                                <th>Especialidade</th>
+                                <th style="color:green; text-align: center; vertical-align: middle;">Visualizar</th>
+                                <th style="color:blue; text-align: center; vertical-align: middle;">Editar</th>
+                                <th style="color:red; text-align: center; vertical-align: middle;">Excluir</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            {% for medico in medicos %}
+                            <tr>
+                                <td>{{medico.nome}}</td>
+                                <td>{{medico.crm}}</td>
+                                <td>{{medico.telefone}}</td>
+                                <td>{{medico.hospita_clinica}}</td>
+                                <td>{{medico.especialidade}}</td>
+                                <td style="text-align: center; vertical-align: middle;">
+                                    <a href="{% url 'detail-medico' medico_id=medico.id %}"> <i class="far fa-eye fa-lg" style="color: #38c007;"></i> </a>
+                                </td>
+                                <td style="text-align: center; vertical-align: middle;">
+                                    <a href="#"> <i class="fas fa-pen fa-lg" style="color:blue;"></i> </a>
+                                </td>
+                                <td style="text-align: center; vertical-align: middle;">
+                                    <a href="#" data-target="#deleteModal" data-toggle="modal"> <i class="fas fa-trash fa-lg" data-target="#deleteModal" style="color: #ff0000;"></i> </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        {% include '_delete.html' %}
+
+
+    {% endblock %}

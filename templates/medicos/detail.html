@@ -1,0 +1,84 @@
+{% extends '_base.html' %}
+
+    {% block content %}
+
+    <section style="background-color: #eee;">
+        <div class="container py-5">
+      
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="card mb-4">
+                <div class="card-body text-center">
+
+                    {% if medicoDetail.foto_perfil %}
+                        <img src="{{medicoDetail.foto_perfil.url}}" alt="avatar"
+                        class="rounded-circle img-fluid" style="width: 150px;">
+                    {% else %}
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                        class="rounded-circle img-fluid" style="width: 150px;">
+                    {% endif %}
+
+                  <h5 class="my-3">{{medico_detail.nome}}</h5>
+                  <div class="d-flex justify-content-center mb-2">
+                    <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary">Editar</button>
+                    <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-danger ms-1" data-target="#deleteModal" data-toggle="modal" style="margin-left:8px;">Deletar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8">
+              <div class="card mb-4">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">CRM</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{{medico_detail.crm}}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Especialidade</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{{medico_detail.especialidade}}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Telefone</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{{medico_detail.telefone}}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Afiliação</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{{medico_detail.hospital_clinica}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card mb-4 mb-md-0">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card mb-4 mb-md-0">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {% include '_delete.html' %}
+    {% endblock %}
