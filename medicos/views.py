@@ -35,18 +35,5 @@ def detail(request, medico_id):
     print(medico_detail.foto_perfil)
     return render(request, 'medicos/detail.html', context) 
 
-#TIRAR OS COMENTÁRIOS QUANDO OS GRUPOS ESTIVEREM PRONTOS
-def add(request):
-    if request.method == 'POST':
-        form = MedicoCreationForm(request.POST)
-        if form.is_valid():
-            form.save(commit=True)
-            #user = form.save(commit=False)
-            #user.save()
-            #group = Group.objects.get(id=2)
-            #user.groups.add(group)
-            return HttpResponseRedirect('/medico/read')
-    else:
-            form = MedicoCreationForm()
-    return render(request, 'medicos/add.html', {'form':form})
+
 
