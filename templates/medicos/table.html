@@ -22,8 +22,6 @@
                                 <th>Filiação</th>
                                 <th>Especialidade</th>
                                 <th style="color:green; text-align: center; vertical-align: middle;">Visualizar</th>
-                                <th style="color:blue; text-align: center; vertical-align: middle;">Editar</th>
-                                <th style="color:red; text-align: center; vertical-align: middle;">Excluir</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -34,8 +32,6 @@
                                 <th>Filiação</th>
                                 <th>Especialidade</th>
                                 <th style="color:green; text-align: center; vertical-align: middle;">Visualizar</th>
-                                <th style="color:blue; text-align: center; vertical-align: middle;">Editar</th>
-                                <th style="color:red; text-align: center; vertical-align: middle;">Excluir</th>
                             </tr>
                         </tfoot>
                         <tbody>
@@ -48,12 +44,6 @@
                                 <td>{{medico.especialidade}}</td>
                                 <td style="text-align: center; vertical-align: middle;">
                                     <a href="{% url 'detail-medico' medico_id=medico.id %}"> <i class="far fa-eye fa-lg" style="color: #38c007;"></i> </a>
-                                </td>
-                                <td style="text-align: center; vertical-align: middle;">
-                                    <a href="#"> <i class="fas fa-pen fa-lg" style="color:blue;"></i> </a>
-                                </td>
-                                <td style="text-align: center; vertical-align: middle;">
-                                    <a href="#"  data-target="" data-toggle="modal"> <i class="fas fa-trash fa-lg" style="color: #ff0000;"></i> </a>
                                 </td>
                             </tr>
 
