@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 from .models import Paciente
 from .forms import PacienteCreationForm, PacienteEditForm
 from django.contrib.auth.models import Group
@@ -32,3 +32,7 @@ def add(request):
     return HttpResponseRedirect('/paciente/read/')
 
 
+def remove(paciente_id):
+    paciente = get_object_or_404(Paciente, id=paciente_id)
+    paciente.delete()
+    return redirect('read-paciente')

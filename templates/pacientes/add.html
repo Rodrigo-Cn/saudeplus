@@ -1,9 +1,0 @@
-{% extends '_base.html' %}
-
-    {% block content %}
-        <form action="{% url 'add-paciente'%}" method="POST">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="Salvar" class="btn btn-primary btn-user btn-block">
-        </form>
-    {% endblock %}

@@ -5,5 +5,6 @@ from django.conf import settings
 
 urlpatterns = [
     path('read/', views.read, name='read-paciente'),
-    path('add/', views.add, name='add-paciente')
+    path('add/', views.add, name='add-paciente'),
+    path('remove/<int:paciente_id>', views.remove, name='remove-paciente')
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

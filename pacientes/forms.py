@@ -29,7 +29,6 @@ class PacienteCreationForm(UserCreationForm):
             'cpf': forms.TextInput(attrs={
                 'class': 'form-control form-control-user',
                 'maxlength': '11',
-                'pattern': '\d{11}',
                 'title': 'Digite um CPF válido com 11 dígitos',
                 'placeholder': 'Digite o CPF'
             }),
