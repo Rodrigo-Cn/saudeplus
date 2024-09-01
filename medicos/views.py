@@ -33,7 +33,6 @@ def read(request):
 def detail(request, medico_id):
     medico_detail = Medico.objects.get(pk=medico_id)
     context = {'medico_detail': medico_detail}
-    print(medico_detail.foto_perfil)
     return render(request, 'medicos/detail.html', context) 
 
 #TIRAR OS COMENTÁRIOS QUANDO OS GRUPOS ESTIVEREM PRONTOS

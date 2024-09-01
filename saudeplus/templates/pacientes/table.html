@@ -1,0 +1,83 @@
+{% extends '_baseTable.html' %}
+
+    {% block content %}
+         <!-- Page Heading -->
+         <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Tabela de Pacientes</h1>
+            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addPacienteModal"><i
+                    class="fas fa-plus fa-sm text-white-50"></i> Adicionar Paciente</a>
+        </div>
+
+         <!-- DataTales Example -->
+         <div class="card shadow mb-4">
+             <div class="card-header py-3">
+                 <h6 class="m-0 font-weight-bold text-primary">Pacientes</h6>
+             </div>
+             <div class="card-body">
+                 <div class="table-responsive">
+                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                         <thead>
+                             <tr>
+                                 <th>Data de Nascimento</th>
+                                 <th>CPF</th>
+                                 <th>Sexo</th>
+                                 <th style="color:green; text-align: center; vertical-align: middle;">Ver Prontuário</th>
+                                 <th style="color:blue; text-align: center; vertical-align: middle;">Editar</th>
+                                 <th style="color:red; text-align: center; vertical-align: middle;">Excluir</th>
+                             </tr>
+                         </thead>
+                         <tfoot>
+                             <tr>
+                                 <th>Data de Nascimento</th>
+                                 <th>CPF</th>
+                                 <th>Sexo</th>
+                                 <th style="color:green; text-align: center; vertical-align: middle;">Ver Prontuário</th>
+                                 <th style="color:blue; text-align: center; vertical-align: middle;">Editar</th>
+                                 <th style="color:red; text-align: center; vertical-align: middle;">Excluir</th>
+                             </tr>
+                         </tfoot>
+                         <tbody>
+                             {% for paciente in pacientes %}
+                             <tr>
+                                 <td>{{paciente.data_nascimento}}</td>
+                                 <td>{{paciente.cpf}}</td>
+                                 <td>{{paciente.sexo}}</td>
+                                 <td style="text-align: center; vertical-align: middle;">
+                                     <a href="#"> <i class="fas fa-book-medical fa-lg" style="color: #38c007;"></i> </a>
+                                 </td>
+                                 <td style="text-align: center; vertical-align: middle;">
+                                    <a href="#"> <i class="fas fa-pen fa-lg" style="color:blue;"></i> </a>
+                                </td>
+                                <td style="text-align: center; vertical-align: middle;">
+                                    <a href="#"  data-target="" data-toggle="modal"> <i class="fas fa-trash fa-lg" style="color: #ff0000;"></i> </a>
+                                </td>
+                             </tr>
+ 
+                             {% endfor %}
+                         </tbody>
+                     </table>
+                 </div>
+             </div>
+         </div>
+
+         <div class="modal fade" id="addPacienteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+         <div class="modal-dialog" role="document">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title" id="exampleModalLabel">Insira as informações do paciente</h5>
+                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                         <span aria-hidden="true">×</span>
+                     </button>
+                 </div>
+                  <form action="{% url 'add-paciente'%}" method="POST">
+                      {% csrf_token %}
+                      {{ form }}
+                      <div class="modal-footer">
+                          <input type="submit" value="Salvar" class="btn btn-primary btn-user btn-block">
+                      </div>
+                  </form>
+             </div>
+         </div>
+      </div>
+    {% endblock %}
