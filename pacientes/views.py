@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from .models import Paciente
 from .forms import PacienteCreationForm, PacienteEditForm
 from django.contrib.auth.models import Group
+from django.contrib import messages
 
 def read(request):
     if request.GET:
@@ -35,4 +36,7 @@ def add(request):
 def remove(request, paciente_id):
     paciente = get_object_or_404(Paciente, id=paciente_id)
     paciente.delete()
-    return redirect('read-paciente')
+
+    messages.info(request, 'Paciente deletado com sucesso')
+
+    return HttpResponseRedirect('/paciente/read/') 
