@@ -18,7 +18,6 @@
                      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                          <thead>
                              <tr>
-                                <th>ID</th>
                                  <th>Data de Nascimento</th>
                                  <th>CPF</th>
                                  <th>Sexo</th>
@@ -33,7 +32,6 @@
                                  <th>Data de Nascimento</th>
                                  <th>CPF</th>
                                  <th>Sexo</th>
-                                 <th>ID</th>
                                  <th style="color:green; text-align: center; vertical-align: middle;">Ver Prontuário</th>
                                  <th style="color:blue; text-align: center; vertical-align: middle;">Editar</th>
                                  <th style="color:red; text-align: center; vertical-align: middle;">Excluir</th>
@@ -42,7 +40,6 @@
                          <tbody>
                              {% for paciente in pacientes %}
                              <tr>
-                                 <td>{{paciente.id}}</td>
                                  <td>{{paciente.data_nascimento}}</td>
                                  <td>{{paciente.cpf}}</td>
                                  <td>{{paciente.sexo}}</td>
@@ -51,10 +48,10 @@
                                      <a href="#"> <i class="fas fa-book-medical fa-lg" style="color: #38c007;"></i> </a>
                                  </td>
                                  <td style="text-align: center; vertical-align: middle;">
-                                    <a href="#"> <i class="fas fa-pen fa-lg" style="color:blue;"></i> </a>
+                                    <a href="{% url 'edit-paciente' paciente.id %}"> <i class="fas fa-pen fa-lg" style="color:blue;"></i> </a>
                                 </td>
                                 <td style="text-align: center; vertical-align: middle;">
-                                    <a href="#"  class="removePaciente" data-target="#deleteModal{{paciente.id}}" data-toggle="modal" data-id="{{ paciente.id }}"> <i class="fas fa-trash fa-lg" style="color: #ff0000;"></i> </a>
+                                    <a  href="{% url 'remove-paciente' paciente.id %}"  class="remove"> <i class="fas fa-trash fa-lg" style="color: #ff0000;"></i> </a>
                                 </td>
                              </tr>
                         
@@ -65,60 +62,28 @@
              </div>
          </div>
 
-         <div class="modal fade" id="addPacienteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-         <div class="modal-dialog" role="document">
-             <div class="modal-content">
-                 <div class="modal-header">
-                     <h5 class="modal-title" id="exampleModalLabel">Insira as informações do paciente</h5>
-                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                         <span aria-hidden="true">×</span>
-                     </button>
-                 </div>
-                  <form action="{% url 'add-paciente'%}" method="POST">
-                      {% csrf_token %}
-                      {{ form }}
-                      <div class="modal-footer">
-                          <input type="submit" value="Salvar" class="btn btn-primary btn-user btn-block">
-                      </div>
-                  </form>
-             </div>
-         </div>
-      </div>
-
-         
-      <div class="modal fade" id="deleteModal{{paciente.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-{{ medico.id }}" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Certeza que deseja deletar este usuário?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Selecione "Sim" abaixo se realmente quiser deletá-lo</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-danger" id="confirmDeleteButton" href="">Sim</a>
-                </div>
+        <div class="modal fade" id="addPacienteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form class="modal-content"  action="{% url 'add-paciente'%}" method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Insira as informações do paciente</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        {{ formCreation.as_p }}
+                        <div class="modal-footer">
+                            <input type="submit" value="Salvar" class="btn btn-primary btn-user btn-block">
+                        </div>
+                    </div>
+                </form>
             </div>
-        </div>
-    </div>
+       </div>
+    
+      {% include '_delete.html' %} 
 
-    <!--<script>
-        $("#dataTable").on('click' , "a.removePaciente" , function (e) {
-            e.preventDefault();
-        
-            var $this = $(this);
-            var pacienteId = $(this).data("id");
-            var url = "{% url 'remove-paciente' 0 %}";
-            url = url.replace('0', patientId);
-        
-            $.get(url, { pacienteId: pacienteId }, function (data) {
-                $('#dataTable').load(document.URL + ' #dataTable');
-        
-                });         
-        });
-    </script> -->
     
     {% endblock %}

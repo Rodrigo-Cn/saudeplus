@@ -4,6 +4,7 @@ from .models import Paciente
 from .forms import PacienteCreationForm, PacienteEditForm
 from django.contrib.auth.models import Group
 from django.contrib import messages
+from .models import Paciente
 
 def read(request):
     if request.GET:
@@ -17,8 +18,8 @@ def read(request):
     else:
         pacientes = Paciente.objects.all()
 
-    form = PacienteCreationForm()
-    context = {'pacientes': pacientes, 'form':form}
+    formCreation = PacienteCreationForm()
+    context = {'pacientes': pacientes, 'formCreation':formCreation}
     return render(request, 'pacientes/table.html', context)
 
 def add(request):
@@ -30,7 +31,8 @@ def add(request):
             #user.save()
             #group = Group.objects.get(id=2)
             #user.groups.add(group)
-    return HttpResponseRedirect('/paciente/read/')
+    messages.info(request, 'Paciente adicionado com sucesso')
+    return redirect('read-paciente')
 
 
 def remove(request, paciente_id):
@@ -39,4 +41,17 @@ def remove(request, paciente_id):
 
     messages.info(request, 'Paciente deletado com sucesso')
 
-    return HttpResponseRedirect('/paciente/read/') 
+    return redirect('read-paciente') 
+
+def edit(request, paciente_id):
+    paciente = get_object_or_404(Paciente, pk=paciente_id)
+
+    if request.method == 'POST':
+        form = PacienteEditForm(request.POST, instance=paciente)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Paciente atualizado com sucesso!')
+            return redirect('read-paciente')
+    else:
+        form = PacienteEditForm(instance=paciente)
+    return render(request, 'pacientes/edit.html', {'form':form})
