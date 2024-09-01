@@ -10,7 +10,7 @@ from medicamentos.models import Medicamento
 from django.core.paginator import Paginator
 
 class CustomLoginView(auth_views.LoginView):
-    form = CustomAuthenticationForm()
+    form_class = CustomAuthenticationForm
     template_name = 'registration/login.html'
 
 def home(request):
