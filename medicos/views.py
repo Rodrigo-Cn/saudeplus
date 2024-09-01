@@ -35,9 +35,6 @@ def detail(request, medico_id):
     context = {'medico_detail': medico_detail}
     return render(request, 'medicos/detail.html', context) 
 
-<<<<<<< HEAD
-
-=======
 #TIRAR OS COMENTÁRIOS QUANDO OS GRUPOS ESTIVEREM PRONTOS
 def add(request):
     if request.method == 'POST':
@@ -52,5 +49,4 @@ def add(request):
         return redirect('home-adm')
     else:
         return redirect('home-adm')
->>>>>>> 51be6bf87c486a7e4bbeafc874cee4ba5f3e4bdc
 
