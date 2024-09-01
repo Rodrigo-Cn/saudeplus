@@ -32,7 +32,7 @@ def add(request):
     return HttpResponseRedirect('/paciente/read/')
 
 
-def remove(paciente_id):
+def remove(request, paciente_id):
     paciente = get_object_or_404(Paciente, id=paciente_id)
     paciente.delete()
     return redirect('read-paciente')

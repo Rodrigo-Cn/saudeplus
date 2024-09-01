@@ -54,10 +54,10 @@
                                     <a href="#"> <i class="fas fa-pen fa-lg" style="color:blue;"></i> </a>
                                 </td>
                                 <td style="text-align: center; vertical-align: middle;">
-                                    <a href="#"  class="removePaciente" data-target="#deleteModal" data-toggle="modal" data-id="{{ paciente.id }}"> <i class="fas fa-trash fa-lg" style="color: #ff0000;"></i> </a>
+                                    <a href="#"  class="removePaciente" data-target="#deleteModal{{paciente.id}}" data-toggle="modal" data-id="{{ paciente.id }}"> <i class="fas fa-trash fa-lg" style="color: #ff0000;"></i> </a>
                                 </td>
                              </tr>
- 
+                        
                              {% endfor %}
                          </tbody>
                      </table>
@@ -86,7 +86,8 @@
          </div>
       </div>
 
-      <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-{{ medico.id }}" aria-hidden="true">
+         
+      <div class="modal fade" id="deleteModal{{paciente.id}}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-{{ medico.id }}" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -104,7 +105,7 @@
         </div>
     </div>
 
-    <script>
+    <!--<script>
         $("#dataTable").on('click' , "a.removePaciente" , function (e) {
             e.preventDefault();
         
@@ -118,6 +119,6 @@
         
                 });         
         });
-    </script>
+    </script> -->
     
     {% endblock %}
