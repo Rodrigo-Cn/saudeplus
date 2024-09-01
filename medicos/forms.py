@@ -52,9 +52,36 @@ class MedicoCreationForm(UserCreationForm):
 
 class MedicoEditForm(UserChangeForm):
     
-    class Meta():
+    password = forms.CharField(widget=forms.HiddenInput(), required=False)
+    
+    class Meta:
         model = Medico
         fields = ['foto_perfil', 'nome', 'crm', 'especialidade', 'telefone', 'hospital_clinica']
-        widgets = {
 
+        widgets = {
+            'foto_perfil': forms.ClearableFileInput(attrs={
+                'class': 'form-control-file', 
+                'aria-describedby': 'fotoPerfilHelp'
+            }),
+            'nome': forms.TextInput(attrs={
+                'class': 'form-control', 
+                'placeholder': 'Nome Completo'
+            }),
+            'crm': forms.TextInput(attrs={
+                'class': 'form-control', 
+                'placeholder': 'CRM'
+            }),
+            'especialidade': forms.TextInput(attrs={
+                'class': 'form-control', 
+                'placeholder': 'Especialidade'
+            }),
+            'telefone': forms.TextInput(attrs={
+                'class': 'form-control', 
+                'placeholder': 'Telefone'
+            }),
+            'hospital_clinica': forms.TextInput(attrs={
+                'class': 'form-control', 
+                'placeholder': 'Hospital/Clínica'
+            }),
         }
+

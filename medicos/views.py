@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Medico
 from .forms import MedicoCreationForm, MedicoEditForm
 from django.contrib import messages
+from .forms import MedicoEditForm
 
 """def home(request):
     user = request.user
@@ -31,8 +32,11 @@ def read(request):
     return render(request, 'medicos/table.html', context)
 
 def detail(request, medico_id):
+
     medico_detail = Medico.objects.get(pk=medico_id)
-    context = {'medico_detail': medico_detail}
+    form = MedicoEditForm(instance=medico_detail)
+
+    context = {'medico_detail': medico_detail, 'form' : form}
     return render(request, 'medicos/detail.html', context) 
 
 #TIRAR OS COMENTÁRIOS QUANDO OS GRUPOS ESTIVEREM PRONTOS
@@ -49,4 +53,23 @@ def add(request):
         return redirect('home-adm')
     else:
         return redirect('home-adm')
+    
+def edit(request, medico_id):
+    medico = get_object_or_404(Medico, pk=medico_id)
+
+    if request.method == 'POST':
+        form = MedicoEditForm(request.POST, request.FILES, instance=medico)  # Inclua request.FILES para lidar com arquivos
+        if form.is_valid():
+            try:
+                form.save()
+                messages.success(request, f"CRM: {medico.crm} editado com sucesso")
+            except Exception as e:
+                messages.error(request, f"Erro ao editar CRM: {medico.crm}. Detalhes: {str(e)}")
+        else:
+            messages.error(request, "Erro ao editar. Verifique os campos e tente novamente.")
+        return redirect('home-adm')
+    else:
+        messages.error(request, f"CRM: {medico.crm} erro ao carregar o formulário de edição")
+        return redirect('home-adm')
+
 

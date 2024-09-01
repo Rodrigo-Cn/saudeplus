@@ -5,6 +5,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('', include('medicos.urls')),
+    path('medico/', include('medicos.urls')),
     path('admin/', admin.site.urls),
     path('usuario/', include('usuarios.urls')),
     path('conta/', include('django.contrib.auth.urls')),
