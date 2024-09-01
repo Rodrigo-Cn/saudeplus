@@ -7,7 +7,7 @@ class Paciente(Usuario):
         ('F', 'Feminino'),
     ]
 
-    cpf = models.CharField(max_length=11)
+    cpf = models.CharField(max_length=11, unique=True)
     sexo = models.CharField(max_length=1, choices=SEXO_CHOICES)
 
     def __str__(self):
