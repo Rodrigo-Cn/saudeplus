@@ -94,15 +94,6 @@
 
             <!-- Main Content -->
             <div id="content">
-                {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                    <div class="alert alert-primary" role="alert">
-                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                    </div>
-                    {% endfor %}
-                </ul>
-                {% endif %}
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -151,6 +142,26 @@
 
                 </nav>
                 <!-- End of Topbar -->
+
+                {% if messages %}
+                <ul class="messages" style="margin-right: 1rem;">
+                    {% for message in messages %}
+                    <div class="alert 
+                        {% if message.tags %}
+                            alert-{{ message.tags }} 
+                        {% else %}
+                            alert-info 
+                        {% endif %}
+                        alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">

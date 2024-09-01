@@ -145,28 +145,30 @@
                                             <tr style="background-color: rgb(245, 249, 249);">
                                                 <th>Nome</th>
                                                 <th style="color:#4e73df;  text-align: center; vertical-align: middle;">Visualizar</th>
-                                                <th style="color:#4e73df; text-align: center; vertical-align: middle;">Editar</th>
-                                                <th style="color:#4e73df;  text-align: center; vertical-align: middle;">Excluir</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {% for medico in medicos %}
                                             <tr>
-                                                <td><img
-                                                    src="https://mdbootstrap.com/img/new/avatars/8.jpg"
-                                                    alt=""
-                                                    style="width: 45px; height: 45px"
-                                                    class="rounded-circle"
-                                                    />
+                                                <td>
+                                                    {% if medico.foto_perfil %}
+                                                        <img
+                                                        src="{{medico.foto_perfil.url}}"
+                                                        alt=""
+                                                        style="width: 45px; height: 45px"
+                                                        class="rounded-circle"
+                                                        />
+                                                    {% else %}
+                                                        <img
+                                                        src="../../media/images/padrao.jpg"
+                                                        alt=""
+                                                        style="width: 45px; height: 45px"
+                                                        class="rounded-circle"
+                                                        />
+                                                    {% endif %}
                                                     {{medico.nome}}</td>
                                                 <td style="text-align: center; vertical-align: middle;">
                                                     <a href="{% url 'detail-medico' medico_id=medico.id %}"> <i class="fa-solid fa-eye" style="color:#4e73df;"></i> </a>
-                                                </td>
-                                                <td style="text-align: center; vertical-align: middle;">
-                                                    <a href="#"> <i class="fa-solid fa-pen-to-square" style="color:#4e73df;"></i> </a>
-                                                </td>
-                                                <td style="text-align: center; vertical-align: middle;">
-                                                    <a href="#"  data-target="" data-toggle="modal"> <i class="fas fa-trash fa-lg" style="color:#4e73df;"></i> </a>
                                                 </td>
                                             </tr>
                 

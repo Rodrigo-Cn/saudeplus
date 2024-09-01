@@ -48,19 +48,11 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-plus"></i>
-                    <span>Visualizar</span>
+                <a class="nav-link d-flex align-items-center" href="/usuario/adm/" style="text-decoration: none;">
+                    <i class="fas fa-arrow-left fa-2x mr-2"></i> <!-- Ícone de voltar maior -->
+                    <span style="font-size: 1.2em; font-weight: bold;">Voltar</span> <!-- Texto maior e em negrito -->
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Escolha o que visualizar:</h6>
-                        <a class="collapse-item" href="cards.html">Lista de Pacientes</a>
-
-                    </div>
-                </div>
-            </li>
+            </li>            
 
             <!-- Nav Item - Pages Collapse Menu -->
 
@@ -116,48 +108,47 @@
                 </nav>
                 <!-- End of Topbar -->
                 {% if messages %}
-                    <ul class="messages" style="margin-right: 1rem;">
-                        {% for message in messages %}
-                            {% if message.tags == 'success' %}
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    {{ message }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            {% elif message.tags == 'error' %}
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    {{ message }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            {% elif message.tags == 'warning' %}
-                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                    {{ message }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            {% elif message.tags == 'info' %}
-                                <div class="alert alert-info alert-dismissible fade show" role="alert">
-                                    {{ message }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            {% else %}
-                                <div class="alert alert-secondary alert-dismissible fade show" role="alert">
-                                    {{ message }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-
+                <ul class="messages" style="margin-right: 1rem;">
+                    {% for message in messages %}
+                        {% if message.tags == 'success' %}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% elif message.tags == 'error' %}
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% elif message.tags == 'warning' %}
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% elif message.tags == 'info' %}
+                            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
