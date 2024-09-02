@@ -1,0 +1,46 @@
+{% extends '_base.html' %}
+{% load static %}
+
+    {% block content %}
+
+
+    <div class="container mt-4">
+        
+    <h1 class="h3 mb-2 text-gray-800" style="padding-bottom: 2rem;">Tabela de Enfermidades</h1>
+        <!-- Barra de Busca com Botão -->
+        <div class="form-row mb-4">
+            <div class="col">
+                <form class="form-inline">
+                    <input type="text" class="form-control mr-2" placeholder="Descrição ou código...">
+                    <button type="submit" class="btn btn-primary btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Tabela -->
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>Código</th>
+                    <th>Descrição</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>João Silva</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Maria Oliveira</td>
+                </tr>
+                <!-- Adicione mais linhas conforme necessário -->
+            </tbody>
+        </table>
+    </div>
+    
+    {% endblock %}

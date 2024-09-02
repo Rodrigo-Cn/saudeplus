@@ -4,15 +4,12 @@ from .models import Medico
 from .forms import MedicoCreationForm, MedicoEditForm
 from django.contrib import messages
 from .forms import MedicoEditForm
+from django.contrib.auth.decorators import login_required
 
-"""def home(request):
+@login_required
+def home(request):
     user = request.user
-    medico = get_object_or_404(Medico, pk=user.id)
-    context = {'medico': medico, 'nome': medico.nome}
-    return render(request, 'medicos/home.html', context)
-"""
-def home(request, medico_id): #VIEW TEMPORÁRIA APENAS PARA TESTES
-    medico = Medico.objects.get(pk=medico_id)
+    medico = Medico.objects.get(pk=user.id)
     context = {'medico': medico, 'nome': medico.nome}
     return render(request, 'medicos/home.html', context)
 
