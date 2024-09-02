@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
+    path("select2/", include("django_select2.urls")),
     path('', include('medicos.urls')),
     path('medico/', include('medicos.urls')),
     path('admin/', admin.site.urls),
@@ -11,5 +12,6 @@ urlpatterns = [
     path('conta/', include('django.contrib.auth.urls')),
     path('paciente/', include('pacientes.urls')),
     path('medicamento/', include('medicamentos.urls')),
+    path('consulta/', include('consultas.urls')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
