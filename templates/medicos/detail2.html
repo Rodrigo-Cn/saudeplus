@@ -1,6 +1,7 @@
-{% extends '_base3.html' %}
+{% extends '_base5.html' %}
 {% load static %}
 
+    {% block link %}/medico/read/{% endblock %}
     {% block content %}
 
     <section style="background-color: #eee;">
@@ -20,9 +21,6 @@
                     {% endif %}
 
                   <h5 class="my-3">{{medico_detail.nome}}</h5>
-
-                  <a type="button" class="btn btn-primary"   data-toggle="modal" data-target="#myModal"><i class="fa-solid fa-pen-to-square" style="color:#ffffff;"></i> Editar</a>
-                  <a type="button" class="btn btn-danger remove" href="{% url 'remove-medico' medico_detail.id %}"><i class="fas fa-trash fa-lg" style="color:#ffffff;"></i> Deletar</a>
 
                   <div class="d-flex justify-content-center mb-2">
                   </div>

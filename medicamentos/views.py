@@ -30,7 +30,8 @@ def home(request):
         context = {
             'form': form,
             'medicamentos':med_page,
-            'resultado':resultado
+            'resultado':resultado,
+            'getter':getter
         }
     else:
         context = {
@@ -80,6 +81,6 @@ def remove(request, id):
     medicamento = get_object_or_404(Medicamento, id=id)
     medicamento.delete()
 
-    messages.info(request, 'Medicamento deletado com sucesso')
+    messages.warning(request, 'Medicamento deletado com sucesso')
 
     return redirect('home-medicamento') 

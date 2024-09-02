@@ -1,7 +1,9 @@
-{% extends '_base.html' %}
+{% extends '_base5.html' %}
 {% load static %}
 
+    {% block link %}/medicamento/{% endblock %}
     {% block content %}
+
 
     <section style="background-color: #eee;">
         <div class="container py-5">
@@ -11,7 +13,7 @@
               <div class="card mb-4">
                 <div class="card-body text-center">
 
-                    {% if medico_detail.foto_perfil %}
+                    {% if medicamento_detail.foto_medicamento %}
                         <img src="{{medicamento_detail.foto_medicamento.url}}" alt="avatar"
                         class="rounded-circle img-fluid" style="width: 150px;">
                     {% else %}

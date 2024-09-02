@@ -2,6 +2,7 @@
 {% load static %}
 
     {% block content %}
+
     <a href="#" class="btn btn-primary btn-icon-split btn-md" data-toggle="modal" data-target="#myModal">
         <span class="icon text-white-50">
             <i class="fa-solid fa-plus"></i>
@@ -13,9 +14,9 @@
     <p class="text-muted mt-3">
         <strong>{{ resultado }}</strong> 
         {% if resultado == 1 %}
-            resultado encontrado
+            resultado encontrado para "{{getter}}."
         {% else %}
-            resultados encontrados
+            resultados encontrados para "{{getter}}."
         {% endif %}
     </p>
     {% endif %}
@@ -82,9 +83,11 @@
                 
                     <!-- Números das páginas -->
                     {% for num in medicamentos.paginator.page_range %}
-                    <li class="page-item {% if medicamentos.number == num %}active{% endif %}">
-                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
-                    </li>
+                        {% if num >= medicamentos.number|add:'-2' and num <= medicamentos.number|add:'1' %}
+                        <li class="page-item {% if medicamentos.number == num %}active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                        {% endif %}
                     {% endfor %}
                 
                     <!-- Botão de próxima página -->
@@ -103,8 +106,7 @@
                     {% endif %}
                 </ul>
             </nav>
-        {% endif %}
-          
+        {% endif %}    
           
     </section>
 

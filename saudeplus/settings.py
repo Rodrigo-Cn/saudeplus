@@ -142,19 +142,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+LOGIN_URL = '/conta/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/usuario/login/'
 
 #SELECT 2 CONFIGURATION
 CACHES = {
     "default": {
-        # Here, we're using the in-memory cache backend.
+        
         "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
 
-        # LOCATION parameter gives a unique name or identifier to this cache instance.
         "LOCATION": "unique-snowflake",
     },
 }
 
-# Tell select2 which cache configuration to use:
 SELECT2_CACHE_BACKEND = "default"

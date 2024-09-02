@@ -34,11 +34,12 @@ class UsuarioCreationForm(UserCreationForm):
 
 
 class UsuarioEditForm(UserChangeForm):
-    
-    class Meta():
+    class Meta:
         model = Usuario
         fields = ['data_nascimento']
         widgets = {
-            'data_nascimento': forms.DateInput(attrs={'class': 'form-control form-control-user', 'type': 'date'}),
-
+            'data_nascimento': forms.DateInput(attrs={
+                'class': 'form-control',
+                'type': 'date'
+            }),
         }
