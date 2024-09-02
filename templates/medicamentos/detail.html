@@ -1,4 +1,5 @@
-{% extends '_base3.html' %}
+{% extends '_base.html' %}
+{% load static %}
 
     {% block content %}
 
@@ -11,14 +12,15 @@
                 <div class="card-body text-center">
 
                     {% if medico_detail.foto_perfil %}
-                        <img src="{{medico_detail.foto_perfil.url}}" alt="avatar"
+                        <img src="{{medicamento_detail.foto_medicamento.url}}" alt="avatar"
                         class="rounded-circle img-fluid" style="width: 150px;">
                     {% else %}
-                        <img src="../../media/images/padrao.jpg" alt="avatar"
+                        <img src="{% static 'img/medicamentos/medicamento.jpg' %}" alt="avatar"
                         class="rounded-circle img-fluid" style="width: 150px;">
                     {% endif %}
 
-                  <h5 class="my-3">{{medico_detail.nome}}</h5>
+                  <h5 class="my-3">{{medicamento_detail.nome}}</h5>
+                  <h5 class="my-3">{{medicamento_detail.volume}}</h5>
 
                   <a type="button" class="btn btn-primary"   data-toggle="modal" data-target="#myModal"><i class="fa-solid fa-pen-to-square" style="color:#ffffff;"></i> Editar</a>
                   <a type="button" class="btn btn-danger"><i class="fas fa-trash fa-lg" style="color:#ffffff;"></i> Deletar</a>
@@ -33,50 +35,49 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-sm-3">
-                      <p class="mb-0">CRM</p>
+                      <p class="mb-0">Nome da Substância</p>
                     </div>
                     <div class="col-sm-9">
-                      <p class="text-muted mb-0">{{medico_detail.crm}}</p>
+                      <p class="text-muted mb-0">{{medicamento_detail.nome_substancia}}</p>
                     </div>
                   </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <p class="mb-0">Especialidade</p>
+                      <p class="mb-0">Apresentação</p>
                     </div>
                     <div class="col-sm-9">
-                      <p class="text-muted mb-0">{{medico_detail.especialidade}}</p>
+                      <p class="text-muted mb-0">{{medicamento_detail.apresentacao}}</p>
                     </div>
                   </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <p class="mb-0">Telefone</p>
+                      <p class="mb-0">Fabricante</p>
                     </div>
                     <div class="col-sm-9">
-                      <p class="text-muted mb-0">{{medico_detail.telefone}}</p>
+                      <p class="text-muted mb-0">{{medicamento_detail.fabricante}}</p>
                     </div>
                   </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <p class="mb-0">Afiliação</p>
+                      <p class="mb-0">Composição</p>
                     </div>
                     <div class="col-sm-9">
-                      <p class="text-muted mb-0">{{medico_detail.hospital_clinica}}</p>
+                      <p class="text-muted mb-0">{{medicamento_detail.composicao}}</p>
                     </div>
                   </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <p class="mb-0">Data de Nascimento</p>
+                      <p class="mb-0">Posologia Recomendada</p>
                     </div>
                     <div class="col-sm-9">
-                      <p class="text-muted mb-0">{{medico_detail.data_nascimento}}</p>
+                      <p class="text-muted mb-0">{{medicamento_detail.posologia_recomendada}}</p>
                     </div>
                   </div>
                 </div>
-              </div>
               <div class="row">
                 <div class="col-md-6">
                   <div class="card mb-4 mb-md-0">
@@ -97,9 +98,9 @@
                 <div class="modal-dialog">
         
                     <!-- Modal content-->
-                    <form class="modal-content" method="post" action="/medico/edit/{{medico_detail.id}}/"  enctype="multipart/form-data">
+                    <form class="modal-content" method="post" action="/medicamento/edit/{{medicamento_detail.id}}/"  enctype="multipart/form-data">
                         <div class="modal-header">
-                            <h4 class="modal-title">Editar Médico</h4>
+                            <h4 class="modal-title"><i class="fa-solid fa-pills fa-1x"></i> Editar Medicamento</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body">

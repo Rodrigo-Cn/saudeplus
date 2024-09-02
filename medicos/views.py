@@ -42,7 +42,7 @@ def detail(request, medico_id):
 #TIRAR OS COMENTÁRIOS QUANDO OS GRUPOS ESTIVEREM PRONTOS
 def add(request):
     if request.method == 'POST':
-        form = MedicoCreationForm(request.POST)
+        form = MedicoCreationForm(request.POST, request.FILES)
         if form.is_valid():
             form.save(commit=True)
             #user = form.save(commit=False)
@@ -52,6 +52,7 @@ def add(request):
         messages.success(request, "Médico cadastrado com sucesso")
         return redirect('home-adm')
     else:
+        messages.error(request, "Erro no cadastro")
         return redirect('home-adm')
     
 def edit(request, medico_id):
