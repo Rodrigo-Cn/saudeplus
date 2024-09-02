@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'medicamentos',
     'consultas',
     'cids',
+    'django_select2',
 ]
 
 MIDDLEWARE = [
@@ -144,3 +145,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/conta/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/usuario/login/'
+
+#SELECT 2 CONFIGURATION
+CACHES = {
+    "default": {
+        
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+
+        "LOCATION": "unique-snowflake",
+    },
+}
+
+SELECT2_CACHE_BACKEND = "default"

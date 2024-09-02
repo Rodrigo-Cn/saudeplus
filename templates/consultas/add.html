@@ -1,0 +1,23 @@
+{% extends '_baseFormConsulta.html'%}
+
+    {% block content %}
+    <form method="post" action="">
+        <div class="modal-header">
+            <h4 class="modal-title"> Adicionar Consulta</h4>
+        </div>
+        <div class="modal-body">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {{form2.as_p}}
+        </div>
+        <div class="modal-footer">
+            <button type="submit" href="#" class="btn btn-primary btn-icon-split" >
+                <span class="text">Adicionar</span>
+            </button>
+        </div>
+    </form>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        {{ form.media.js }}
+    {% endblock %}
+
+
