@@ -30,7 +30,8 @@ def home(request):
         context = {
             'form': form,
             'medicamentos':med_page,
-            'resultado':resultado
+            'resultado':resultado,
+            'getter':getter
         }
     else:
         context = {

@@ -68,11 +68,10 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Escolha para onde ir:</h6>
                         <a class="collapse-item" href="{% url 'read-medico' %}">Médicos</a>
-                        <a class="collapse-item" href="cards.html">Medicamentos</a>
+                        <a class="collapse-item" href="{% url 'home-medicamento' %}">Medicamentos</a>
                         <a class="collapse-item" href="{% url 'read-paciente' %}">Pacientes</a>
-                        <a class="collapse-item" href="cards.html">CIDs</a>
+                        <a class="collapse-item" href="{% url 'home-cid' %}">CIDs</a>
                         <a class="collapse-item" href="cards.html">Consultas</a>
-
                     </div>
                 </div>
             </li>
@@ -120,7 +119,7 @@
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Perfil
+                                    Ver Perfil
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>

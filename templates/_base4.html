@@ -68,11 +68,10 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Escolha para onde ir:</h6>
                         <a class="collapse-item" href="{% url 'read-medico' %}">Médicos</a>
-                        <a class="collapse-item" href="cards.html">Medicamentos</a>
+                        <a class="collapse-item" href="{% url 'home-medicamento' %}">Medicamentos</a>
                         <a class="collapse-item" href="{% url 'read-paciente' %}">Pacientes</a>
-                        <a class="collapse-item" href="cards.html">CIDs</a>
+                        <a class="collapse-item" href="{% url 'home-cid' %}">CIDs</a>
                         <a class="collapse-item" href="cards.html">Consultas</a>
-
                     </div>
                 </div>
             </li>
@@ -106,7 +105,7 @@
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
                             <input name="nome" type="text" class="form-control bg-light border-0 small" placeholder="Nome do medicamento..."
-                                aria-label="Search" aria-describedby="basic-addon2">
+                                aria-label="Search" aria-describedby="basic-addon2" value="{{getter}}">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">
                                     <i class="fas fa-search fa-sm"></i>
@@ -134,7 +133,7 @@
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Perfil
+                                    Ver Perfil
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>

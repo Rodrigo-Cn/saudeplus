@@ -1,9 +1,9 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Medico
-from .forms import MedicoCreationForm, MedicoEditForm
+from .forms import MedicoCreationForm, MedicoEditForm, MedicoForm2
 from django.contrib import messages
-from .forms import MedicoEditForm
+from .forms import MedicoEditForm, MedicoEditImage
 from django.contrib.auth.decorators import login_required
 
 @login_required
@@ -28,13 +28,21 @@ def read(request):
     context = {'medicos': medicos}
     return render(request, 'medicos/table.html', context)
 
+def detail2(request, medico_id):
+
+    medico_detail = Medico.objects.get(pk=medico_id)
+    form = MedicoEditForm(instance=medico_detail)
+
+    context = {'medico_detail': medico_detail, 'form' : form}
+    return render(request, 'medicos/detail2.html', context)
+
 def detail(request, medico_id):
 
     medico_detail = Medico.objects.get(pk=medico_id)
     form = MedicoEditForm(instance=medico_detail)
 
     context = {'medico_detail': medico_detail, 'form' : form}
-    return render(request, 'medicos/detail2.html', context) 
+    return render(request, 'medicos/detail.html', context) 
 
 #TIRAR OS COMENTÁRIOS QUANDO OS GRUPOS ESTIVEREM PRONTOS
 def add(request):
@@ -78,3 +86,28 @@ def remove(request, medico_id):
     messages.info(request, 'Medico deletado com sucesso')
 
     return redirect('home-adm') 
+
+def perfil(request, medico_id):
+
+    medico_detail = Medico.objects.get(pk=medico_id)
+
+    context = {'medico': medico_detail}
+    return render(request, 'medicos/perfil.html', context)
+
+
+def editperfil(request, medico_id):
+    medico = Medico.objects.get(id=medico_id)
+    
+    if request.method == 'POST':
+        form = MedicoForm2(request.POST, instance=medico)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Perfil editado com sucesso")
+        else:
+            messages.error(request, "Erro ao editar o perfil")
+        return render(request, 'medicos/editperfil.html', {'form': form, 'medico': medico})
+    else:
+        form = MedicoForm2(instance=medico)
+
+    return render(request, 'medicos/editperfil.html', {'form': form, 'medico': medico})
+
