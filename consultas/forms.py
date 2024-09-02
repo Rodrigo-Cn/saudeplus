@@ -66,9 +66,12 @@ class Cons_medicamentoCreationForm(forms.ModelForm):
      
      class Meta():
         model = Cons_medicamento
-        fields =  '__all__'
+        fields =  [ 'dose', 'periodicidade', 'tempo_de_uso_dias']
         widgets = {
- 
+            'dose': forms.TextInput(attrs={'class': 'form-control'}),
+            'periodicidade': forms.TextInput(attrs={'class': 'form-control'}),
+            'tempo_de_uso_dias': forms.NumberInput(attrs={'class': 'form-control'}),
+            
         }
 
 class Cons_medicamentoEditForm(forms.ModelForm):
