@@ -75,3 +75,11 @@ def edit(request, id):
     else:
         messages.error(request, f"{medicamento.nome} erro ao carregar o formulário de edição")
         return redirect('home-medicamento')
+
+def remove(request, id):
+    medicamento = get_object_or_404(Medicamento, id=id)
+    medicamento.delete()
+
+    messages.info(request, 'Medicamento deletado com sucesso')
+
+    return redirect('home-medicamento') 
