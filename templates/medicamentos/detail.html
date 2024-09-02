@@ -23,7 +23,7 @@
                   <h5 class="my-3">{{medicamento_detail.volume}}</h5>
 
                   <a type="button" class="btn btn-primary"   data-toggle="modal" data-target="#myModal"><i class="fa-solid fa-pen-to-square" style="color:#ffffff;"></i> Editar</a>
-                  <a type="button" class="btn btn-danger"><i class="fas fa-trash fa-lg" style="color:#ffffff;"></i> Deletar</a>
+                  <a type="button" class="btn btn-danger remove"  href="{% url 'remove-medicamento' medicamento_detail.id %}"><i class="fas fa-trash fa-lg" style="color:#ffffff;"></i> Deletar</a>
 
                   <div class="d-flex justify-content-center mb-2">
                   </div>
