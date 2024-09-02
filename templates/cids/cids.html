@@ -10,8 +10,8 @@
         <!-- Barra de Busca com Botão -->
         <div class="form-row mb-4">
             <div class="col">
-                <form class="form-inline">
-                    <input type="text" class="form-control mr-2" placeholder="Descrição ou código...">
+                <form class="form-inline" method="get" action="/cid/">
+                    <input name="query" type="text" class="form-control mr-2" placeholder="Descrição ou código..." value="{{query}}">
                     <button type="submit" class="btn btn-primary btn-icon-split">
                         <span class="icon text-white-50">
                             <i class="fa-solid fa-magnifying-glass"></i>
@@ -22,25 +22,29 @@
         </div>
         
         <!-- Tabela -->
-        <table class="table table-bordered">
-            <thead class="thead-light">
-                <tr>
-                    <th>Código</th>
-                    <th>Descrição</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>João Silva</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Maria Oliveira</td>
-                </tr>
-                <!-- Adicione mais linhas conforme necessário -->
-            </tbody>
-        </table>
+        {% if cids %}
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Código</th>
+                        <th>Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cid in cids %}
+                        <tr>
+                            <td>{{cid.codigo}}</td>
+                            <td>{{cid.descricao}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="alert alert-danger text-center mx-auto w-50" role="alert">
+                <p><i class="fa-solid fa-syringe fa-2x"></i></p>
+                Nenhuma CID encontrado.
+            </div>            
+        {% endif %}
     </div>
     
     {% endblock %}

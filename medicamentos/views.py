@@ -80,6 +80,6 @@ def remove(request, id):
     medicamento = get_object_or_404(Medicamento, id=id)
     medicamento.delete()
 
-    messages.info(request, 'Medicamento deletado com sucesso')
+    messages.warning(request, 'Medicamento deletado com sucesso')
 
     return redirect('home-medicamento') 

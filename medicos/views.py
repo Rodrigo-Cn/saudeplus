@@ -34,7 +34,7 @@ def detail(request, medico_id):
     form = MedicoEditForm(instance=medico_detail)
 
     context = {'medico_detail': medico_detail, 'form' : form}
-    return render(request, 'medicos/detail.html', context) 
+    return render(request, 'medicos/detail2.html', context) 
 
 #TIRAR OS COMENTÁRIOS QUANDO OS GRUPOS ESTIVEREM PRONTOS
 def add(request):
