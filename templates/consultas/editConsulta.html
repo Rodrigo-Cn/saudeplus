@@ -3,6 +3,8 @@
 
 {% block title %}Editar Consulta{% endblock %}
 
+{% block link %}/consulta/read/{% endblock %}
+
     {% block content %}
         <form method='POST'>
             {% csrf_token %}
