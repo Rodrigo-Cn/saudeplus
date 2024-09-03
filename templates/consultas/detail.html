@@ -1,0 +1,296 @@
+{% extends '_base.html' %}
+{% load static %}
+
+    {% block content %}
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Informações gerais sobre a consulta</h1>
+
+    </div>
+    <section style="background-color: #eee;">
+          <!-- Page Heading -->
+          
+        <div class="container py-5" >
+          
+            <div id="accordion">
+                <div class="card">
+                  <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Consulta
+                      </button>
+                    </h5>
+                  </div>
+              
+                  <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                            <p class="mb-0">Nome do Médico</p>
+                            </div>
+                            <div class="col-sm-9">
+                            <p class="text-muted mb-0">{{consulta.medico.nome}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                            <p class="mb-0">CPF do Paciente</p>
+                            </div>
+                            <div class="col-sm-9">
+                            <p class="text-muted mb-0">{{consulta.paciente.cpf}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                        <p class="mb-0">Data</p>
+                        </div>
+                        <div class="col-sm-9">
+                        <p class="text-muted mb-0">{{consulta.data}}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                        <p class="mb-0">Pressão</p>
+                        </div>
+                        <div class="col-sm-9">
+                        <p class="text-muted mb-0">{{consulta.pressao}}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                        <p class="mb-0">Glicose</p>
+                        </div>
+                        <div class="col-sm-9">
+                        <p class="text-muted mb-0">{{consulta.glicose}}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                        <p class="mb-0">Frequência Cardíaca</p>
+                        </div>
+                        <div class="col-sm-9">
+                        <p class="text-muted mb-0">{{consulta.f_cardiaca}}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                            <div class="col-sm-3">
+                            <p class="mb-0">Saturação de Oxigênio</p>
+                            </div>
+                            <div class="col-sm-9">
+                            <p class="text-muted mb-0">{{consulta.sat_oxigenio}}</p>
+                            </div>
+                    </div>
+                    <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                <p class="mb-0">Altura</p>
+                                </div>
+                                <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{consulta.altura}}</p>
+                                </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                            <p class="mb-0">Observações</p>
+                            </div>
+                            <div class="col-sm-9">
+                            <p class="text-muted mb-0">{{consulta.observacoes}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                            <p class="mb-0">Temperatura</p>
+                            </div>
+                            <div class="col-sm-9">
+                            <p class="text-muted mb-0">{{consulta.temperatura}}</p>
+                        </div>
+                     </div>
+                 </div>    
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseTwo">
+                        Medicamentos
+                      </button>
+                    </h5>
+                  </div>
+                  <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body"> 
+                        {% for medicamento in medicamentos %}  
+                        <h2> </h2>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Nome da Substância</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{medicamento.nome_substancia}}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Posologia Recomendada</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{medicamento.posologia_recomendada}}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Apresentação</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{medicamento.apresentacao}}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Composição</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{medicamento.composicao}}</p>
+                                </div>
+                            </div>
+                            <hr class="rounded" style=" border-top: 8px solid #bbb;
+                            border-radius: 5px;">
+                          
+                        {% endfor %}
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        CIDs
+                      </button>
+                    </h5>
+                  </div>
+                  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                    <div class="card-body">
+                        {% for cid in cids %}  
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Código</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{cid.codigo}}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p class="mb-0">Descrição</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p class="text-muted mb-0">{{cid.descricao}}</p>
+                                </div>
+                            </div>
+                            <hr class="rounded" style=" border-top: 8px solid #bbb;
+                                        border-radius: 5px;">
+
+                        {% endfor %}
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapsefive" aria-expanded="false" aria-controls="collapseTwo">
+                          Receitas
+                        </button>
+                      </h5>
+                    </div>
+                    <div id="collapsefive" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                      <div class="card-body">
+                        {% for receita in receitas %}  
+
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <a href="{% url 'edit-consulta-receita' receita.id %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" ><i
+                                class="fas fa-plus fa-sm text-white-50"></i> Editar Receita</a>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Medicamento</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{receita.medicamento.nome}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Periodicidade</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{receita.periodicidade}}</p>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Dose</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{receita.dose}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Tempo de Uso em Dias</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{receita.tempo_de_uso_dias}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <hr class="rounded" style=" border-top: 8px solid #bbb;
+                                    border-radius: 5px;">
+
+                    {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+              </div>
+   
+                   
+        
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card mb-4 mb-md-0">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card mb-4 mb-md-0">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+              <!-- Modal -->
+              
+
+          
+    
+      {% include '_delete.html' %}
+    {% endblock %}

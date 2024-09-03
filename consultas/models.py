@@ -19,11 +19,11 @@ class Consulta(models.Model):
     medicamentos = models.ManyToManyField(Medicamento, through='Cons_medicamento')
 
     def __str__(self):
-        return f"Consulta em {self.data} de {self.paciente.nome}"
+        return f"Consulta em {self.data} de {self.paciente.cpf}"
 
 class Cons_medicamento(models.Model):
     consulta = models.ForeignKey(Consulta, on_delete=models.CASCADE)
     medicamento = models.ForeignKey('medicamentos.Medicamento', on_delete=models.CASCADE)
-    dose = models.CharField(max_length=20)
-    periodicidade = models.CharField(max_length=40)
-    tempo_de_uso_dias = models.IntegerField()
+    dose = models.CharField(max_length=20, null=True, blank=True)
+    periodicidade = models.CharField(max_length=40, null=True, blank=True)
+    tempo_de_uso_dias = models.IntegerField(null=True, blank=True)
