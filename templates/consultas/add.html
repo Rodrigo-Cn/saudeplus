@@ -1,6 +1,8 @@
-{% extends '_baseFormConsulta.html'%}
+{% extends '_base5.html' %}
 
 {% block title %}Adicionar Consulta{% endblock %}
+
+{% block link %}/consulta/read/{% endblock %}
 
     {% block content %}
     <form method="post" action="{% url 'add-consulta' %}">
