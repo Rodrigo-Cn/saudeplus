@@ -3,7 +3,7 @@
          <!-- Page Heading -->
          <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Tabela de Consultas</h1>
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addPacienteModal"><i
+            <a href="{% url 'add-consulta' %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                     class="fas fa-plus fa-sm text-white-50"></i> Adicionar Consulta</a>
         </div>
 
@@ -17,6 +17,8 @@
                      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                          <thead>
                              <tr>
+                                <th>ID</th>
+
                                  <th>Data</th>
                                  <th>Médico</th>
                                  <th>Paciente</th>
@@ -28,6 +30,8 @@
                          </thead>
                          <tfoot>
                              <tr>
+                                <th>ID</th>
+
                                  <th>Data</th>
                                  <th>Médico</th>
                                  <th>Paciente</th>
@@ -39,18 +43,20 @@
                          <tbody>
                              {% for consulta in consultas %}
                              <tr>
+                                <td>{{consulta.id}}</td>
+
                                  <td>{{consulta.data}}</td>
                                  <td>{{consulta.medico}}</td>
                                  <td>{{consulta.paciente}}</td>
                                 
                                  <td style="text-align: center; vertical-align: middle;">
-                                     <a href="#"> <i class="fas fa-book-medical fa-lg" style="color: #38c007;"></i> </a>
+                                     <a href="{% url 'detail-consulta' consulta.id %}"> <i class="fas fa-eye fa-lg" style="color: #38c007;"></i> </a>
                                  </td>
                                  <td style="text-align: center; vertical-align: middle;">
-                                    <a href=""> <i class="fas fa-pen fa-lg" style="color:blue;"></i> </a>
+                                    <a href="{% url 'edit-consulta' consulta.id %}"> <i class="fas fa-pen fa-lg" style="color:blue;"></i> </a>
                                 </td>
                                 <td style="text-align: center; vertical-align: middle;">
-                                    <a  href=""  class="remove"> <i class="fas fa-trash fa-lg" style="color: #ff0000;"></i> </a>
+                                    <a  href="{% url 'remove-consulta' consulta.id %}"  class="remove"> <i class="fas fa-trash fa-lg" style="color: #ff0000;"></i> </a>
                                 </td>
                              </tr>
                         
@@ -60,30 +66,6 @@
                  </div>
              </div>
          </div>
-
-        <div class="modal fade" id="addPacienteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-          aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <form class="modal-content"  action="" method="POST">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Insira as informações da consulta</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <div class="modal-footer">
-                            <input type="submit" value="Salvar" class="btn btn-primary btn-user btn-block">
-                        </div>
-                    </div>
-                 
-                </form>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  <!-- jQuery -->
-                {{ form.media.js }}  <!-- JS do Select2 -->
-            </div>
-       </div>
 
 
       {% include '_delete.html' %} 
