@@ -92,7 +92,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Administrador</span>
                                 <img class="img-profile rounded-circle"
-                                    src="{% static 'img/undraw_profile.svg' %}">
+                                    src="{% static 'img/adm.jpg' %}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -205,7 +205,7 @@
                 <form method="post" action="/conta/logout/" class="modal-footer">
                     {% csrf_token %}
                     <button type="button" class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary" href="{% static 'login.html' %}">Sair</a>
+                    <button type="submit" class="btn btn-primary">Sair</a>
                     </form>
             </div>
         </div>
