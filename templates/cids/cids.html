@@ -20,6 +20,16 @@
                 </form>
             </div>
         </div>
+        {% if resultado %}
+        <p class="text-muted mt-3" style="margin-bottom: 2rem;">
+            <strong>{{ resultado }}</strong> 
+            {% if resultado == 1 %}
+                resultado encontrado para "{{query}}".
+            {% else %}
+                resultados encontrados para "{{query}}".
+            {% endif %}
+        </p>
+        {% endif %}
         
         <!-- Tabela -->
         {% if cids %}

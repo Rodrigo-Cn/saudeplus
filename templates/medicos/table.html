@@ -1,57 +1,133 @@
 {% extends '_baseTable.html' %}
+{% load static %}
 
     {% block content %}
 
-        <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Tabela de Médicos</h1>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static '/css/medico/table.css' %}">
 
-        <!-- DataTales Example -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Médicos</h6>
+    <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-12 col-sm-8 col-lg-6">
+                <!-- Section Heading-->
+                <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                    <h3 style="margin-bottom: 2rem;">Lista de <span>Médicos</span></h3>
+                    <form method="GET" action="{% url 'read-medico' %}" class="mb-4 d-flex justify-content-center" style="margin-bottom: 2rem;">
+                        <div class="input-group" style="max-width: 400px; width: 100%;">
+                            <input type="text" class="form-control" name="nome" placeholder="Buscar por nome..." value="{{getter}}">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>                
+                
+              </div>
             </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>CRM</th>
-                                <th>Telefone</th>
-                                <th>Filiação</th>
-                                <th>Especialidade</th>
-                                <th style="color:green; text-align: center; vertical-align: middle;">Visualizar</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Nome</th>
-                                <th>CRM</th>
-                                <th>Telefone</th>
-                                <th>Filiação</th>
-                                <th>Especialidade</th>
-                                <th style="color:green; text-align: center; vertical-align: middle;">Visualizar</th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            {% for medico in medicos %}
-                            <tr>
-                                <td>{{medico.nome}}</td>
-                                <td>{{medico.crm}}</td>
-                                <td>{{medico.telefone}}</td>
-                                <td>{{medico.hospita_clinica}}</td>
-                                <td>{{medico.especialidade}}</td>
-                                <td style="text-align: center; vertical-align: middle;">
-                                    <a href="{% url 'detail2-medico' medico_id=medico.id %}"> <i class="far fa-eye fa-lg" style="color: #38c007;"></i> </a>
-                                </td>
-                            </tr>
-
-                            {% endfor %}
-                        </tbody>
-                    </table>
+            {% if resultado %}
+            <p class="text-muted mt-3" style="margin-bottom: 2rem;">
+                <strong>{{ resultado }}</strong> 
+                {% if resultado == 1 %}
+                    resultado encontrado para "{{getter}}."
+                {% else %}
+                    resultados encontrados para "{{getter}}."
+                {% endif %}
+            </p>
+            {% endif %}
+            <div class="row">
+              <!-- Single Advisor-->
+            {% if medicos %}
+              {% for medico in medicos %}
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                        <!-- Team Thumb-->
+                        <div class="advisor_thumb">
+                            {% if medico.foto_perfil %}
+                                <img
+                                src="{{medico.foto_perfil.url}}"
+                                alt=""
+                                style="width: 250px; height: 250px"
+                                />
+                            {% else %}
+                                <img
+                                src="../../media/images/padrao.jpg"
+                                alt=""
+                                style="width: 250px; height: 250px"
+                                />
+                            {% endif %}
+                            <!-- Social Info-->
+                            <div class="social-info">
+                                <a href="{% url 'detail2-medico' medico.id%}"><i class="fa-regular fa-eye" style="color: #3f43fd;"></i></a>
+                            </div>
+                        </div>
+                        <!-- Team Details-->
+                        <div class="single_advisor_details_info">
+                            <h6>{{ medico.nome }}</h6>
+                            <p class="designation">
+                                {{medico.especialidade}}
+                            </p>
+                            <p class="designation">
+                                CRM: {{medico.crm}}
+                            </p>
+                        </div>
+                    </div>
                 </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-danger text-center mx-auto w-50" role="alert" style="margin-top: 4rem;">
+                    <p><i class="fa-solid fa-user-doctor fa-2x"></i></p>
+                    Nenhum médico encontrado.
+                </div>            
+            {% endif %}
             </div>
-        </div>
 
+            {% if medicos.paginator.num_pages > 1 %}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <!-- Botão de página anterior -->
+                        {% if medicos.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ medicos.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    
+                        <!-- Números das páginas -->
+                        {% for num in medicos.paginator.page_range %}
+                            {% if num >= medicos.number|add:'-2' and num <= medicos.number|add:'1' %}
+                            <li class="page-item {% if medicos.number == num %}active{% endif %}">
+                                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+                    
+                        <!-- Botão de próxima página -->
+                        {% if medicos.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ medicos.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+
+          </div>
 
     {% endblock %}

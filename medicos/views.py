@@ -12,6 +12,7 @@ from cids.models import Cid
 from medicamentos.models import Medicamento
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import user_passes_test
+from django.core.paginator import Paginator
 
 def isEstudante(user):
     return user.groups.filter(name='Estudante').exists()
@@ -56,20 +57,45 @@ def home(request):
 @user_passes_test(is_medico_ou_estudante, login_url='/')
 def read(request):
     user = request.user
+    medicouser = Medico.objects.get(pk=user.id)
+    
+    user = request.user
     medico = Medico.objects.get(pk=user.id)
-    if request.GET:
-        
-        dic = {}
-        
-        for key, val in request.GET.lists():
-            dic.update({key + "__contains": val[0]})
 
-        medicos = Medico.objects.all().filter(**dic)
+    getter = request.GET.get('nome')
+    dic = {}
+
+    if getter:
+        dic['nome__icontains'] = getter
+
+
+    medico = Medico.objects.filter(**dic).order_by('nome')
+
+    resultado = Medico.objects.filter(**dic).order_by('nome').count()
+
+    if request.GET.get('page'):
+        page_num = request.GET.get('page')
     else:
-        medicos = Medico.objects.all()
+        page_num = 1
 
-    context = {'medicos': medicos, 'medico': medico}
-    return render(request, 'medicos/table.html', context)
+    medico_paginator = Paginator(medico,12)
+
+    med_page = medico_paginator.get_page(page_num)
+
+    if getter:
+        context = {
+            'medicos':med_page,
+            'resultado':resultado,
+            'getter':getter,
+            'medico':medicouser
+        }
+    else:
+        context = {
+            'medicos':med_page,
+            'medico':medicouser
+        }
+
+    return render(request, "medicos/table.html", context)
 
 @login_required
 @user_passes_test(is_medico_ou_estudante, login_url='/')

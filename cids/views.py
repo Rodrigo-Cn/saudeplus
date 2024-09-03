@@ -28,12 +28,19 @@ def home(request):
     cid_paginator = Paginator(cids, 12)
     cid_page = cid_paginator.get_page(page_num)
 
-    context = {
-        'cids': cid_page,
-        'resultado': resultado,
-        'medico':medico,
-        'query': query,
-    }
+    if query:
+        context = {
+            'cids': cid_page,
+            'resultado': resultado,
+            'medico':medico,
+            'query': query,
+        }
+    else:
+        context = {
+            'cids': cid_page,
+            'medico':medico,
+            'query': query,
+        }
 
     return render(request, "cids/cids.html", context)
 
