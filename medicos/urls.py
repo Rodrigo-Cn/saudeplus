@@ -9,9 +9,8 @@ urlpatterns = [
     path('detail/<int:medico_id>/', views.detail, name='detail-medico'),
     path('detail2/<int:medico_id>/', views.detail2, name='detail2-medico'),
     path('edit/<int:medico_id>/', views.edit, name='edit-medico'),
-    path('perfil/<int:medico_id>/', views.perfil, name='perfil-medico'),
-    path('editperfil/<int:medico_id>/', views.editperfil, name='edit-perfil'),
-    path('editimage/<int:medico_id>/', views.editperfil, name='edit-image'),
+    path('perfil/', views.perfil, name='perfil-medico'),
+    path('editperfil/', views.editperfil, name='edit-perfil'),
     path('remove/<int:medico_id>/', views.remove, name='remove-medico'),
     path('add/', views.add, name='add-medico')
 ]

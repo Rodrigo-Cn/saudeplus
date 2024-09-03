@@ -30,7 +30,7 @@
                     <div class="card mb-4">
                         <div class="card-header">Detalhes da Conta</div>
                         <div class="card-body">
-                            <form method="POST" enctype="multipart/form-data" action="{% url 'edit-perfil' medico.id %}">
+                            <form method="POST" enctype="multipart/form-data" action="{% url 'edit-perfil' %}">
                                 {% csrf_token %}
                                 <div class="mb-3">
                                     <div class="mb-3">

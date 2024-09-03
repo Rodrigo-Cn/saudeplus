@@ -10,6 +10,7 @@ from medicamentos.models import Medicamento
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 
 
 def custom_login_view(request):
@@ -27,7 +28,7 @@ def custom_login_view(request):
         form = CustomAuthenticationForm()
     return render(request, 'registration/login.html', {'form': form})
 
-
+@login_required
 def home(request):
     getter = request.GET.get('nome')
     dic = {}

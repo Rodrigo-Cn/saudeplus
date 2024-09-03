@@ -6,8 +6,15 @@ from django.contrib.auth.models import Group
 from django.contrib import messages
 from .models import Paciente
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
+from medicos.models import Medico
 
+@login_required
 def read(request):
+
+    user = request.user
+    medico = Medico.objects.get(pk=user.id)
+
     if request.GET:
         
         dic = {}
@@ -20,9 +27,10 @@ def read(request):
         pacientes = Paciente.objects.all()
 
     formCreation = PacienteCreationForm()
-    context = {'pacientes': pacientes, 'formCreation':formCreation}
+    context = {'pacientes': pacientes, 'formCreation':formCreation, 'medico':medico}
     return render(request, 'pacientes/table.html', context)
 
+@login_required
 def adm(request):
     getter = request.GET.get('cpf')
     dic = {}
@@ -44,6 +52,7 @@ def adm(request):
     context = {'pacientes': pacientes_page}
     return render(request, 'pacientes/table2.html', context)
 
+@login_required
 def add(request):
     if request.method == 'POST':
         form = PacienteCreationForm(request.POST)
@@ -56,7 +65,7 @@ def add(request):
     messages.info(request, 'Paciente adicionado com sucesso')
     return redirect('read-paciente')
 
-
+@login_required
 def remove(request, paciente_id):
     paciente = get_object_or_404(Paciente, id=paciente_id)
     paciente.delete()
@@ -65,7 +74,12 @@ def remove(request, paciente_id):
 
     return redirect('read-paciente') 
 
+@login_required
 def edit(request, paciente_id):
+
+    user = request.user
+    medico = Medico.objects.get(pk=user.id)
+
     paciente = get_object_or_404(Paciente, pk=paciente_id)
 
     if request.method == 'POST':
@@ -76,4 +90,4 @@ def edit(request, paciente_id):
             return redirect('read-paciente')
     else:
         form = PacienteEditForm(instance=paciente)
-    return render(request, 'pacientes/edit.html', {'form':form})
+    return render(request, 'pacientes/edit.html', {'form':form, 'medico':medico})

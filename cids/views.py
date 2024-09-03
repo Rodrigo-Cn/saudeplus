@@ -2,8 +2,13 @@ from django.shortcuts import render
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import Cid
+from medicos.models import Medico
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def home(request):
+    user = request.user
+    medico = Medico.objects.get(pk=user.id)
     query = request.GET.get('query', '')
     dic = Q()
 
@@ -21,6 +26,7 @@ def home(request):
     context = {
         'cids': cid_page,
         'resultado': resultado,
+        'medico':medico,
         'query': query,
     }
 

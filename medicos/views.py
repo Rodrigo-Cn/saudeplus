@@ -20,10 +20,13 @@ def home(request):
     pacientes = Paciente.objects.count()
     consultas = Consulta.objects.count()
     medicamentos = Medicamento.objects.count() 
-    context = {'medico': medico, 'nome': medico.nome, 'num_cids':cids, 'num_pacientes':pacientes, 'num_consultas':consultas, 'num_medicamentos':medicamentos, 'num_medicos':medicos}
+    context = {'medico': medico, 'num_cids':cids, 'num_pacientes':pacientes, 'num_consultas':consultas, 'num_medicamentos':medicamentos, 'num_medicos':medicos}
     return render(request, 'medicos/home.html', context)
 
+@login_required
 def read(request):
+    user = request.user
+    medico = Medico.objects.get(pk=user.id)
     if request.GET:
         
         dic = {}
@@ -35,17 +38,22 @@ def read(request):
     else:
         medicos = Medico.objects.all()
 
-    context = {'medicos': medicos}
+    context = {'medicos': medicos, 'medico': medico}
     return render(request, 'medicos/table.html', context)
 
+@login_required
 def detail2(request, medico_id):
+
+    user = request.user
+    medico = Medico.objects.get(pk=user.id)
 
     medico_detail = Medico.objects.get(pk=medico_id)
     form = MedicoEditForm(instance=medico_detail)
 
-    context = {'medico_detail': medico_detail, 'form' : form}
+    context = {'medico_detail': medico_detail, 'form' : form, 'medico': medico}
     return render(request, 'medicos/detail2.html', context)
 
+@login_required
 def detail(request, medico_id):
 
     medico_detail = Medico.objects.get(pk=medico_id)
@@ -54,7 +62,7 @@ def detail(request, medico_id):
     context = {'medico_detail': medico_detail, 'form' : form}
     return render(request, 'medicos/detail.html', context) 
 
-#TIRAR OS COMENTÁRIOS QUANDO OS GRUPOS ESTIVEREM PRONTOS
+@login_required
 def add(request):
     if request.method == 'POST':
         form = MedicoCreationForm(request.POST, request.FILES)
@@ -69,7 +77,8 @@ def add(request):
     else:
         messages.error(request, "Erro no cadastro")
         return redirect('home-adm')
-    
+
+@login_required 
 def edit(request, medico_id):
     medico = get_object_or_404(Medico, pk=medico_id)
 
@@ -88,7 +97,7 @@ def edit(request, medico_id):
         messages.error(request, f"CRM: {medico.crm} erro ao carregar o formulário de edição")
         return redirect('home-adm')
 
-
+@login_required
 def remove(request, medico_id):
     medico = get_object_or_404(Medico, id=medico_id)
     medico.delete()
@@ -97,16 +106,20 @@ def remove(request, medico_id):
 
     return redirect('home-adm') 
 
-def perfil(request, medico_id):
+@login_required
+def perfil(request):
 
-    medico_detail = Medico.objects.get(pk=medico_id)
+    user = request.user
+    medico_detail = Medico.objects.get(pk=user.id)
 
     context = {'medico': medico_detail}
     return render(request, 'medicos/perfil.html', context)
 
+@login_required
+def editperfil(request):
 
-def editperfil(request, medico_id):
-    medico = Medico.objects.get(id=medico_id)
+    user = request.user
+    medico = Medico.objects.get(pk=user.id)
     
     if request.method == 'POST':
         form = MedicoForm2(request.POST, request.FILES,  instance=medico)

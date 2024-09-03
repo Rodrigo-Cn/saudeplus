@@ -3,8 +3,15 @@ from .forms import MedicamentoForm
 from django.contrib import messages
 from .models import Medicamento
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
+from medicos.models import Medico
 
+@login_required
 def home(request):
+
+    user = request.user
+    medico = Medico.objects.get(pk=user.id)
+
     getter = request.GET.get('nome')
     dic = {}
 
@@ -31,16 +38,19 @@ def home(request):
             'form': form,
             'medicamentos':med_page,
             'resultado':resultado,
-            'getter':getter
+            'getter':getter,
+            'medico':medico
         }
     else:
         context = {
             'form': form,
             'medicamentos':med_page,
+            'medico':medico
         }
 
     return render(request, "medicamentos/medicamentos.html", context)
 
+@login_required
 def add(request):
         if request.method == 'POST':
             form = MedicamentoForm(request.POST, request.FILES)
@@ -51,12 +61,17 @@ def add(request):
         else:
             messages.error(request, "Erro no cadastro")
             return redirect('home-medicamento')
-        
+
+@login_required     
 def detail(request, id):
+
+    user = request.user
+    medico = Medico.objects.get(pk=user.id)
+
     medicamento_detail = Medicamento.objects.get(pk=id)
     form = MedicamentoForm(instance=medicamento_detail)
 
-    context = {'medicamento_detail': medicamento_detail, 'form' : form}
+    context = {'medicamento_detail': medicamento_detail, 'form' : form, 'medico':medico}
     return render(request, 'medicamentos/detail.html', context) 
 
 def edit(request, id):
@@ -77,6 +92,7 @@ def edit(request, id):
         messages.error(request, f"{medicamento.nome} erro ao carregar o formulário de edição")
         return redirect('home-medicamento')
 
+@login_required
 def remove(request, id):
     medicamento = get_object_or_404(Medicamento, id=id)
     medicamento.delete()
