@@ -1,0 +1,103 @@
+{% extends '_base3.html' %}
+
+{% block content %}
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Tabela de Pacientes</h1>
+    </div>
+
+    <!-- Search Bar -->
+    <form method="GET" action="{% url 'adm-paciente' %}" class="mb-4">
+        <div class="input-group" style="max-width: 300px;">
+            <input type="text" class="form-control" name="cpf" placeholder="Buscar por CPF">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Pacientes</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                {% if pacientes %}
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Data de Nascimento</th>
+                                <th>CPF</th>
+                                <th>Sexo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for paciente in pacientes %}
+                            <tr>
+                                <td>{{ paciente.data_nascimento }}</td>
+                                <td>{{ paciente.cpf }}</td>
+                                <td>{{ paciente.sexo }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="alert alert-danger text-center mx-auto w-50" role="alert">
+                        <p><i class="fas fa-user-injured fa-2x"></i></p>
+                        Nenhuma paciente encontrado.
+                    </div>            
+                {% endif %}
+
+                <!-- Paginação -->
+                {% if pacientes.paginator.num_pages > 1 %}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <!-- Botão de página anterior -->
+                        {% if pacientes.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ pacientes.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        <!-- Números das páginas -->
+                        {% for num in pacientes.paginator.page_range %}
+                            {% if num >= pacientes.number|add:'-2' and num <= pacientes.number|add:'1' %}
+                            <li class="page-item {% if pacientes.number == num %}active{% endif %}">
+                                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        <!-- Botão de próxima página -->
+                        {% if pacientes.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ pacientes.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

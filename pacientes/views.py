@@ -5,6 +5,7 @@ from .forms import PacienteCreationForm, PacienteEditForm
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from .models import Paciente
+from django.core.paginator import Paginator
 
 def read(request):
     if request.GET:
@@ -21,6 +22,27 @@ def read(request):
     formCreation = PacienteCreationForm()
     context = {'pacientes': pacientes, 'formCreation':formCreation}
     return render(request, 'pacientes/table.html', context)
+
+def adm(request):
+    getter = request.GET.get('cpf')
+    dic = {}
+
+    if getter:
+        dic['cpf__icontains'] = getter
+
+    pacientes = Paciente.objects.filter(**dic).order_by('cpf')
+
+    if request.GET.get('page'):
+        page_num = request.GET.get('page')
+    else:
+        page_num = 1
+
+    pacientes_paginator = Paginator(pacientes,15)
+
+    pacientes_page = pacientes_paginator.get_page(page_num)
+
+    context = {'pacientes': pacientes_page}
+    return render(request, 'pacientes/table2.html', context)
 
 def add(request):
     if request.method == 'POST':

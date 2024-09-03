@@ -93,7 +93,7 @@ def remove(request, medico_id):
     medico = get_object_or_404(Medico, id=medico_id)
     medico.delete()
 
-    messages.info(request, 'Medico deletado com sucesso')
+    messages.warning(request, 'Medico deletado com sucesso')
 
     return redirect('home-adm') 
 
