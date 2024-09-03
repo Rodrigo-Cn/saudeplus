@@ -5,6 +5,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('read/', views.read, name='read-paciente'),
+    path('adm/', views.adm, name='adm-paciente'),
     path('add/', views.add, name='add-paciente'),
     path('remove/<int:paciente_id>', views.remove, name='remove-paciente'),
     path('edit/<int:paciente_id>', views.edit, name="edit-paciente")

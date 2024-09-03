@@ -21,6 +21,7 @@
                             <!-- Profile picture help block -->
                             <div class="small font-italic text-muted mb-4">JPG ou PNG não maior que 5 MB</div>
                             <!-- Profile picture upload form -->
+                            <a href="{% url 'password_change' %}">Alterar Senha</a>
                         </div>
                     </div>
                 </div>
@@ -29,9 +30,13 @@
                     <div class="card mb-4">
                         <div class="card-header">Detalhes da Conta</div>
                         <div class="card-body">
-                            <form method="POST" action="{% url 'edit-perfil' medico.id %}">
+                            <form method="POST" enctype="multipart/form-data" action="{% url 'edit-perfil' medico.id %}">
                                 {% csrf_token %}
                                 <div class="mb-3">
+                                    <div class="mb-3">
+                                        <label class="small mb-1" for="inputUsername">Foto do Perfil</label>
+                                        {{ form.foto_perfil }}
+                                    </div>
                                     <label class="small mb-1" for="inputUsername">Nome</label>
                                     {{ form.nome }}
                                 </div>

@@ -3,14 +3,24 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Medico
 from .forms import MedicoCreationForm, MedicoEditForm, MedicoForm2
 from django.contrib import messages
-from .forms import MedicoEditForm, MedicoEditImage
+from .forms import MedicoEditForm
 from django.contrib.auth.decorators import login_required
+from medicos.models import Medico
+from pacientes.models import Paciente
+from consultas.models import Consulta
+from cids.models import Cid
+from medicamentos.models import Medicamento
 
 @login_required
 def home(request):
     user = request.user
     medico = Medico.objects.get(pk=user.id)
-    context = {'medico': medico, 'nome': medico.nome}
+    medicos = Medico.objects.count()
+    cids = Cid.objects.count()
+    pacientes = Paciente.objects.count()
+    consultas = Consulta.objects.count()
+    medicamentos = Medicamento.objects.count() 
+    context = {'medico': medico, 'nome': medico.nome, 'num_cids':cids, 'num_pacientes':pacientes, 'num_consultas':consultas, 'num_medicamentos':medicamentos, 'num_medicos':medicos}
     return render(request, 'medicos/home.html', context)
 
 def read(request):
@@ -83,7 +93,7 @@ def remove(request, medico_id):
     medico = get_object_or_404(Medico, id=medico_id)
     medico.delete()
 
-    messages.info(request, 'Medico deletado com sucesso')
+    messages.warning(request, 'Medico deletado com sucesso')
 
     return redirect('home-adm') 
 
@@ -99,7 +109,7 @@ def editperfil(request, medico_id):
     medico = Medico.objects.get(id=medico_id)
     
     if request.method == 'POST':
-        form = MedicoForm2(request.POST, instance=medico)
+        form = MedicoForm2(request.POST, request.FILES,  instance=medico)
         if form.is_valid():
             form.save()
             messages.success(request, "Perfil editado com sucesso")

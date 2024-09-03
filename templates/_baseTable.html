@@ -42,7 +42,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #08415c; background-image: none;">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% static 'index.html' %}">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'home' %}">
 
                 <div class="sidebar-brand-icon">
                    <div class="container">
@@ -57,7 +57,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="{% static 'index.html' %}">
+                <a class="nav-link" href="{% url 'home' %}">
                     <i class="fas fa-fw fa-home"></i>
 
                     <span>Tela Inicial</span></a>
