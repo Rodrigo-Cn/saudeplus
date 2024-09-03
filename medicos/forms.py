@@ -88,7 +88,7 @@ class MedicoEditForm(UserChangeForm):
 class MedicoForm2(UsuarioEditForm):
     class Meta:
         model = Medico
-        fields = ['username', 'nome', 'crm', 'especialidade', 'telefone', 'hospital_clinica', 'data_nascimento']
+        fields = ['username', 'nome', 'crm', 'especialidade', 'telefone', 'hospital_clinica', 'data_nascimento','foto_perfil']
         widgets = {
             'username': forms.TextInput(attrs={
                 'class': 'form-control', 
@@ -124,16 +124,10 @@ class MedicoForm2(UsuarioEditForm):
                 'id': 'inputHospitalClinica',
                 'placeholder': 'Digite o nome do hospital/clínica'
             }),
-        }
-
-class MedicoEditImage(forms.ModelForm):
-    class Meta:
-        model = Medico
-        fields = ['foto_perfil']
-        widgets = {
             'foto_perfil': forms.ClearableFileInput(attrs={
-                'class': 'form-control-file',
+                'class': 'form-control-file', 
                 'aria-describedby': 'fotoPerfilHelp'
             }),
         }
+
 
