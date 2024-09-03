@@ -10,20 +10,50 @@ from pacientes.models import Paciente
 from consultas.models import Consulta
 from cids.models import Cid
 from medicamentos.models import Medicamento
+from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import user_passes_test
+
+def isEstudante(user):
+    return user.groups.filter(name='Estudante').exists()
+
+def isMedico(user):
+    return user.groups.filter(name='Medico').exists()
+
+def isAdministrador(user):
+    return user.groups.filter(name='Administrador').exists()
+
+def is_medico_ou_estudante(user):
+    return user.groups.filter(name__in=['Medico', 'Estudante']).exists()
 
 @login_required
 def home(request):
     user = request.user
-    medico = Medico.objects.get(pk=user.id)
-    medicos = Medico.objects.count()
-    cids = Cid.objects.count()
-    pacientes = Paciente.objects.count()
-    consultas = Consulta.objects.count()
-    medicamentos = Medicamento.objects.count() 
-    context = {'medico': medico, 'num_cids':cids, 'num_pacientes':pacientes, 'num_consultas':consultas, 'num_medicamentos':medicamentos, 'num_medicos':medicos}
-    return render(request, 'medicos/home.html', context)
+
+    if isAdministrador(user):
+        return redirect('home-adm')
+    elif is_medico_ou_estudante(user):
+        medico = Medico.objects.get(pk=user.id)
+        medicos = Medico.objects.count()
+        cids = Cid.objects.count()
+        pacientes = Paciente.objects.count()
+        consultas = Consulta.objects.count()
+        medicamentos = Medicamento.objects.count()
+
+        context = {
+            'medico': medico,
+            'num_cids': cids,
+            'num_pacientes': pacientes,
+            'num_consultas': consultas,
+            'num_medicamentos': medicamentos,
+            'num_medicos': medicos,
+        }
+        return render(request, 'medicos/home.html', context)
+    else:
+        messages.error(request, "Você não tem permissão para acessar essa página.")
+        return redirect('login')
 
 @login_required
+@user_passes_test(is_medico_ou_estudante, login_url='/')
 def read(request):
     user = request.user
     medico = Medico.objects.get(pk=user.id)
@@ -42,6 +72,7 @@ def read(request):
     return render(request, 'medicos/table.html', context)
 
 @login_required
+@user_passes_test(is_medico_ou_estudante, login_url='/')
 def detail2(request, medico_id):
 
     user = request.user
@@ -54,6 +85,7 @@ def detail2(request, medico_id):
     return render(request, 'medicos/detail2.html', context)
 
 @login_required
+@user_passes_test(isAdministrador, login_url='/')
 def detail(request, medico_id):
 
     medico_detail = Medico.objects.get(pk=medico_id)
@@ -63,22 +95,33 @@ def detail(request, medico_id):
     return render(request, 'medicos/detail.html', context) 
 
 @login_required
+@user_passes_test(isAdministrador, login_url='/')
 def add(request):
     if request.method == 'POST':
         form = MedicoCreationForm(request.POST, request.FILES)
+        grupo = request.POST.get('grupo')
         if form.is_valid():
-            form.save(commit=True)
-            #user = form.save(commit=False)
-            #user.save()
-            #group = Group.objects.get(id=2)
-            #user.groups.add(group)
-        messages.success(request, "Médico cadastrado com sucesso")
-        return redirect('home-adm')
-    else:
-        messages.error(request, "Erro no cadastro")
-        return redirect('home-adm')
+            user = form.save(commit=False)
+            user.save()
 
-@login_required 
+            if grupo == 'estudante':
+                group = Group.objects.get(id=3)
+            else:
+                group = Group.objects.get(id=2)
+            user.groups.add(group)
+
+            messages.success(request, "Médico cadastrado com sucesso")
+            return redirect('home-adm')
+        else:
+            messages.error(request, "Erro no cadastro")
+    else:
+        form = MedicoCreationForm()
+    
+    return render(request, 'template_name.html', {'form': form})
+
+
+@login_required
+@user_passes_test(isAdministrador, login_url='/')
 def edit(request, medico_id):
     medico = get_object_or_404(Medico, pk=medico_id)
 
@@ -98,6 +141,7 @@ def edit(request, medico_id):
         return redirect('home-adm')
 
 @login_required
+@user_passes_test(isAdministrador, login_url='/')
 def remove(request, medico_id):
     medico = get_object_or_404(Medico, id=medico_id)
     medico.delete()
@@ -107,6 +151,7 @@ def remove(request, medico_id):
     return redirect('home-adm') 
 
 @login_required
+@user_passes_test(is_medico_ou_estudante, login_url='/')
 def perfil(request):
 
     user = request.user
@@ -116,6 +161,7 @@ def perfil(request):
     return render(request, 'medicos/perfil.html', context)
 
 @login_required
+@user_passes_test(is_medico_ou_estudante, login_url='/')
 def editperfil(request):
 
     user = request.user

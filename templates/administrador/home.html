@@ -366,30 +366,38 @@
 
 
         <!-- Modal de cadastro -->
-
-        <!-- Modal -->
         <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+            <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <form class="modal-content" method="post" action="/medico/add/"  enctype="multipart/form-data">
-                <div class="modal-header">
-                    <h4 class="modal-title"><i class="fa-solid fa-stethoscope  fa-1x"></i> Cadastrar Médico</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" href="#" class="btn btn-primary btn-icon-split" >
-                        <span class="text">Cadastrar</span>
-                    </button>
-                </div>
-            </form>
+                <!-- Modal content-->
+                <form class="modal-content" method="post" action="/medico/add/" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h4 class="modal-title"><i class="fa-solid fa-stethoscope fa-1x"></i> Cadastrar Médico</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        
+                        <!-- Select para escolher o grupo -->
+                        <div class="form-group">
+                            <label for="grupo">Grupo</label>
+                            <select name="grupo" id="grupo" class="form-control">
+                                <option value="medico">Médico</option>
+                                <option value="estudante">Estudante</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" href="#" class="btn btn-primary btn-icon-split">
+                            <span class="text">Cadastrar</span>
+                        </button>
+                    </div>
+                </form>
 
-        </div>
-        </div>
+            </div>
+</div>
+
 
 {% endblock %}
 

@@ -11,7 +11,10 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 
+def isAdministrador(user):
+    return user.groups.filter(name='Administrador').exists()
 
 def custom_login_view(request):
     if request.method == 'POST':
@@ -29,6 +32,7 @@ def custom_login_view(request):
     return render(request, 'registration/login.html', {'form': form})
 
 @login_required
+@user_passes_test(isAdministrador, login_url='/')
 def home(request):
     getter = request.GET.get('nome')
     dic = {}

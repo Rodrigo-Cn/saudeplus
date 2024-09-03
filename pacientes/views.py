@@ -8,8 +8,17 @@ from .models import Paciente
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from medicos.models import Medico
+from django.contrib.auth.decorators import user_passes_test
+
+def is_medico_ou_estudante(user):
+    return user.groups.filter(name__in=['Medico', 'Estudante']).exists()
+
+
+def isAdministrador(user):
+    return user.groups.filter(name='Administrador').exists()
 
 @login_required
+@user_passes_test(is_medico_ou_estudante, login_url='/')
 def read(request):
 
     user = request.user
@@ -31,6 +40,7 @@ def read(request):
     return render(request, 'pacientes/table.html', context)
 
 @login_required
+@user_passes_test(isAdministrador, login_url='/')
 def adm(request):
     getter = request.GET.get('cpf')
     dic = {}
@@ -53,19 +63,22 @@ def adm(request):
     return render(request, 'pacientes/table2.html', context)
 
 @login_required
+@user_passes_test(is_medico_ou_estudante, login_url='/')
 def add(request):
     if request.method == 'POST':
         form = PacienteCreationForm(request.POST)
         if form.is_valid():
-            form.save(commit=True)
-            #user = form.save(commit=False)
-            #user.save()
-            #group = Group.objects.get(id=2)
-            #user.groups.add(group)
-    messages.info(request, 'Paciente adicionado com sucesso')
+            user = form.save(commit=False)
+            user.save()
+            group = Group.objects.get(id=4)
+            user.groups.add(group)
+            messages.info(request, 'Paciente adicionado com sucesso')
+        else:
+            messages.error(request, 'Erro ao adicionar paciente')
     return redirect('read-paciente')
 
 @login_required
+@user_passes_test(is_medico_ou_estudante, login_url='/')
 def remove(request, paciente_id):
     paciente = get_object_or_404(Paciente, id=paciente_id)
     paciente.delete()
@@ -75,6 +88,7 @@ def remove(request, paciente_id):
     return redirect('read-paciente') 
 
 @login_required
+@user_passes_test(is_medico_ou_estudante, login_url='/')
 def edit(request, paciente_id):
 
     user = request.user

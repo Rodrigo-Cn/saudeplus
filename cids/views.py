@@ -4,8 +4,13 @@ from django.db.models import Q
 from .models import Cid
 from medicos.models import Medico
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
+
+def is_medico_ou_estudante(user):
+    return user.groups.filter(name__in=['Medico', 'Estudante']).exists()
 
 @login_required
+@user_passes_test(is_medico_ou_estudante, login_url='/')
 def home(request):
     user = request.user
     medico = Medico.objects.get(pk=user.id)

@@ -7,8 +7,13 @@ from django.contrib import messages
 from .models import Cons_medicamento
 from django.contrib.auth.decorators import login_required
 from medicos.models import Medico
+from django.contrib.auth.decorators import user_passes_test
+
+def is_medico_ou_estudante(user):
+    return user.groups.filter(name__in=['Medico', 'Estudante']).exists()
 
 @login_required
+@user_passes_test(is_medico_ou_estudante, login_url='/')
 def read(request):
 
     user = request.user
@@ -21,6 +26,7 @@ def read(request):
     return render(request, 'consultas/table.html', context)
 
 @login_required
+@user_passes_test(is_medico_ou_estudante, login_url='/')
 def add(request):
 
     user = request.user
@@ -43,6 +49,7 @@ def add(request):
     return render(request, 'consultas/add.html', {'form': form, 'medico':medico})
 
 @login_required
+@user_passes_test(is_medico_ou_estudante, login_url='/')
 def remove(request, consulta_id):
     paciente = get_object_or_404(Consulta, id=consulta_id)
     paciente.delete()
@@ -52,6 +59,7 @@ def remove(request, consulta_id):
     return redirect('read-consulta') 
 
 @login_required
+@user_passes_test(is_medico_ou_estudante, login_url='/')
 def edit(request, consulta_id):
     
     user = request.user
@@ -70,6 +78,7 @@ def edit(request, consulta_id):
     return render(request, 'consultas/editConsulta.html', {'form':form, 'medico':medico})
 
 @login_required
+@user_passes_test(is_medico_ou_estudante, login_url='/')
 def detail(request, consulta_id):
     
     user = request.user
@@ -82,6 +91,7 @@ def detail(request, consulta_id):
     return render(request, 'consultas/detail.html', context) 
 
 @login_required
+@user_passes_test(is_medico_ou_estudante, login_url='/')
 def editar_receita(request, receita_id):
         
     user = request.user
