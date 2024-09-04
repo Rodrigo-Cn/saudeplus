@@ -9,6 +9,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from medicos.models import Medico
 from django.contrib.auth.decorators import user_passes_test
+from consultas.models import Consulta
 
 def is_medico_ou_estudante(user):
     return user.groups.filter(name__in=['Medico', 'Estudante']).exists()
@@ -105,3 +106,13 @@ def edit(request, paciente_id):
     else:
         form = PacienteEditForm(instance=paciente)
     return render(request, 'pacientes/edit.html', {'form':form, 'medico':medico})
+
+@login_required
+@user_passes_test(is_medico_ou_estudante, login_url='/')
+def registro(request, paciente_id):
+    consultas = Consulta.objects.filter(paciente_id=paciente_id)  
+    if not consultas.exists(): 
+        messages.success(request, 'Esse paciente não tem consultas!')
+        return redirect('read-paciente')
+    medico = Medico.objects.get(pk=request.user.id)
+    return render(request, 'pacientes/view.html', {'consultas':consultas, 'medico':medico})

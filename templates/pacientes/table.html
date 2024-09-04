@@ -47,7 +47,7 @@
                                  <td>{{paciente.sexo}}</td>
                                 
                                  <td style="text-align: center; vertical-align: middle;">
-                                     <a href="#"> <i class="fas fa-book-medical fa-lg" style="color: #38c007;"></i> </a>
+                                     <a href="{% url 'read-registro' paciente.id %}"> <i class="fas fa-book-medical fa-lg" style="color: #38c007;"></i> </a>
                                  </td>
                                  <td style="text-align: center; vertical-align: middle;">
                                     <a href="{% url 'edit-paciente' paciente.id %}"> <i class="fas fa-pen fa-lg" style="color:blue;"></i> </a>
