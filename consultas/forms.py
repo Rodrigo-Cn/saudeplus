@@ -66,6 +66,13 @@ class ConsultaCreationForm(forms.ModelForm):
             'data', 'pressao', 'glicose', 'f_cardiaca', 'temperatura', 
             'sat_oxigenio', 'altura', 'observacoes', 'medico', 'paciente','cids', 'medicamentos'
         ]
+        labels = {
+            'pressao': 'Pressão',
+            'f_cardiaca': 'Frequência Cardiaca',
+            'sat_oxigenio': 'Saturação Oxigênio',
+            'observacoes': 'Observações',
+            'medico': 'Médico',
+        }
         widgets = {
             'data': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'pressao': forms.TextInput(attrs={'class': 'form-control'}),

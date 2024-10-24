@@ -112,7 +112,7 @@ def edit(request, paciente_id):
 def registro(request, paciente_id):
     consultas = Consulta.objects.filter(paciente_id=paciente_id)  
     if not consultas.exists(): 
-        messages.success(request, 'Esse paciente não tem consultas!')
+        messages.warning(request, 'Esse paciente não possui consultas!')
         return redirect('read-paciente')
     medico = Medico.objects.get(pk=request.user.id)
     return render(request, 'pacientes/view.html', {'consultas':consultas, 'medico':medico})

@@ -9,3 +9,6 @@ class Medicamento(models.Model):
     composicao = models.CharField(max_length=50)
     posologia_recomendada = models.CharField(max_length=50)
     nome_substancia = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nome

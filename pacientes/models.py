@@ -11,4 +11,4 @@ class Paciente(Usuario):
     sexo = models.CharField(max_length=1, choices=SEXO_CHOICES)
 
     def __str__(self):
-        return self.usuario.username
+        return self.cpf
