@@ -74,4 +74,34 @@ class CidsList(APIView):
             return Response(cid_serializer.data, status=status.HTTP_201_CREATED)
         return Response({"message": "Erro ao criar CID."}, status=status.HTTP_400_BAD_REQUEST)
 
+class CidViewDetail(APIView):
+    def get(self, request, id):
+        try:
+            cid = Cid.objects.get(pk=id)
+        except Cid.DoesNotExist:
+            return Response({"message": "CID não encontrado."}, status=status.HTTP_404_NOT_FOUND)
 
+        cid_serializer = CidSerializer(cid)
+        return Response(cid_serializer.data, status=status.HTTP_200_OK)
+    
+    def put(self, request, id):
+        try:
+            cid = Cid.objects.get(pk=id)
+        except Cid.DoesNotExist:
+            return Response({"message": "CID não encontrado."}, status=status.HTTP_404_NOT_FOUND)
+        
+        cid_serializer = CidSerializer(cid, data=request.data)
+        if cid_serializer.is_valid():
+            cid_serializer.save()
+            return Response(cid_serializer.validated_data, status=status.HTTP_200_OK)
+        else:
+            return Response(cid_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, id):
+        try:
+            cid = Cid.objects.get(pk=id)
+        except Cid.DoesNotExist:
+            return Response({"message": "CID não encontrado."}, status=status.HTTP_404_NOT_FOUND)
+        name = cid.descricao
+        cid.delete()
+        return Response({"message": f"CID:{name} deletado com sucesso."}, status=status.HTTP_200_OK)
