@@ -12,5 +12,7 @@ urlpatterns = [
     path('perfil/', views.perfil, name='perfil-medico'),
     path('editperfil/', views.editperfil, name='edit-perfil'),
     path('remove/<int:medico_id>/', views.remove, name='remove-medico'),
-    path('add/', views.add, name='add-medico')
+    path('add/', views.add, name='add-medico'),
+    path('api/', views.MedicosList.as_view()),
+    path('api/<int:id>/', views.MedicoViewDetail.as_view()),
 ]
