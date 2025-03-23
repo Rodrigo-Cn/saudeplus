@@ -11,9 +11,6 @@ urlpatterns = [
     path('remove/<int:paciente_id>', views.remove, name='remove-paciente'),
     path('edit/<int:paciente_id>', views.edit, name="edit-paciente"),
     path('registro/<int:paciente_id>', views.registro, name="read-registro"),
-
-    #api
     path('api/', PacientesList.as_view()),
     path(r'api/<int:pk>/', PacienteDetail.as_view()),
-    
 ]

@@ -18,7 +18,6 @@ from rest_framework import status
 from .serializers import PacienteSerializer
 from .paginations import PacientePagination
 
-# criando class lista de pacientes metodos get e post
 class PacientesList(APIView):
     def get(self, request):
         cpf = request.query_params.get('cpf')
@@ -43,7 +42,6 @@ class PacientesList(APIView):
             return Response(paciente_serializer.data, status=status.HTTP_201_CREATED)
         return Response({"message": "Erro ao criar Paciente."}, status=status.HTTP_400_BAD_REQUEST)
     
-#agora o PUT e DELETE de paciente 
 class PacienteDetail(APIView):
     def get_object(self, pk):
         try:
@@ -70,9 +68,6 @@ class PacienteDetail(APIView):
         paciente.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
-
-#-----------------------------------------------------------------------
 def is_medico_ou_estudante(user):
     return user.groups.filter(name__in=['Medico', 'Estudante']).exists()
 
