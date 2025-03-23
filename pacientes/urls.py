@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from django.conf.urls.static import static
 from django.conf import settings
-from .views import PacientesList
+from .views import PacientesList, PacienteDetail
 
 urlpatterns = [
     path('read/', views.read, name='read-paciente'),
@@ -13,6 +13,7 @@ urlpatterns = [
     path('registro/<int:paciente_id>', views.registro, name="read-registro"),
 
     #api
-    path('api/pacientes/', PacientesList.as_view()),
+    path('api/', PacientesList.as_view()),
+    path(r'api/<int:pk>/', PacienteDetail.as_view()),
     
 ]
