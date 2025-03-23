@@ -8,6 +8,11 @@ from .models import Cons_medicamento
 from django.contrib.auth.decorators import login_required
 from medicos.models import Medico
 from django.contrib.auth.decorators import user_passes_test
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import ConsultaSerializer
+from .paginations import ConsultaPagination
 
 def is_medico_ou_estudante(user):
     return user.groups.filter(name__in=['Medico', 'Estudante']).exists()
@@ -37,7 +42,7 @@ def add(request):
         print(request.POST)
         if form.is_valid():
             consulta = form.save(commit=False)
-            consulta.save()  # Primeiro, salva o objeto principal para obter o ID
+            consulta.save() 
             form.save_m2m()
             
             messages.success(request, "Consulta adicionada com sucesso!")
@@ -106,3 +111,55 @@ def editar_receita(request, receita_id):
     else:
         form = Cons_medicamentoEditForm(instance=receita)
     return render(request, 'consultas/editReceita.html', {'form':form, 'medico':medico})
+
+class ConsultaList(APIView):
+
+    def get(self, request):
+        consultas = Consulta.objects.all()
+        self.paginator = ConsultaPagination()
+        page = self.paginator.paginate_queryset(consultas, request)
+
+        if page is not None:
+            consultas_serializer = ConsultaSerializer(page, many=True)
+            return self.paginator.get_paginated_response(consultas_serializer.data)
+
+        return Response(ConsultaSerializer(consultas, many=True).data, status=200)
+    
+    def post(self, request):
+        consulta_serializer = ConsultaSerializer(data=request.data)
+        if consulta_serializer.is_valid():
+            consulta_serializer.save()
+            return Response(consulta_serializer.data, status=status.HTTP_201_CREATED)
+        return Response({"message": "Erro ao criar Consulta."}, status=status.HTTP_400_BAD_REQUEST)
+
+class ConsultaViewDetail(APIView):
+    def get(self, request, id):
+        try:
+            consulta = Consulta.objects.get(pk=id)
+        except Consulta.DoesNotExist:
+            return Response({"message": "Consulta não encontrada."}, status=status.HTTP_404_NOT_FOUND)
+
+        consulta_serializer = ConsultaSerializer(consulta)
+        return Response(consulta_serializer.data, status=status.HTTP_200_OK)
+    
+    def put(self, request, id):
+        try:
+            consulta = Consulta.objects.get(pk=id)
+        except Consulta.DoesNotExist:
+            return Response({"message": "Consulta não encontrada."}, status=status.HTTP_404_NOT_FOUND)
+        
+        consulta_serializer = ConsultaSerializer(consulta, data=request.data)
+        if consulta_serializer.is_valid():
+            consulta_serializer.save()
+            return Response(consulta_serializer.data, status=status.HTTP_200_OK)  # Usar consulta_serializer.data
+        else:
+            return Response(consulta_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, id):
+        try:
+            consulta = Consulta.objects.get(pk=id)
+        except Consulta.DoesNotExist:
+            return Response({"message": "Consulta não encontrada."}, status=status.HTTP_404_NOT_FOUND)
+        
+        consulta.delete()
+        return Response({"message": "Consulta deletada com sucesso."}, status=status.HTTP_200_OK)

@@ -10,6 +10,7 @@ urlpatterns = [
     path('remove/<int:consulta_id>/', views.remove, name='remove-consulta'),
     path('add/', views.add, name='add-consulta'),
     path('detail/', views.detail, name='detail-consulta'),
-    path('editReceita/<int:receita_id>/', views.editar_receita, name='edit-consulta-receita')
-
+    path('editReceita/<int:receita_id>/', views.editar_receita, name='edit-consulta-receita'),
+    path('api/', views.ConsultaList.as_view()),
+    path('api/<int:id>/', views.ConsultaViewDetail.as_view()),
 ]
