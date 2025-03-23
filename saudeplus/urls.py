@@ -11,7 +11,7 @@ urlpatterns = [
     path('usuario/', include('usuarios.urls')),
     path('conta/', include('usuarios.urls')),
     path('conta/', include('django.contrib.auth.urls')),
-    path('paciente/', include('pacientes.urls')),
+    path('pacientes/', include('pacientes.urls')),
     path('medicamento/', include('medicamentos.urls')),
     path('consulta/', include('consultas.urls')),
     path('cid/', include('cids.urls')),
