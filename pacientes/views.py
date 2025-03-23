@@ -11,6 +11,63 @@ from medicos.models import Medico
 from django.contrib.auth.decorators import user_passes_test
 from consultas.models import Consulta
 
+from django.http import Http404
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import PacienteSerializer
+from .paginations import PacientePagination
+
+class PacientesList(APIView):
+    def get(self, request):
+        cpf = request.query_params.get('cpf')
+        if cpf:
+            pacientes = Paciente.objects.filter(cpf__icontains=cpf)
+        else:
+            pacientes = Paciente.objects.all()
+
+        paginator = PacientePagination()
+        page = paginator.paginate_queryset(pacientes, request)
+
+        if page is not None:
+            pacientes_serializer = PacienteSerializer(page, many=True)
+            return paginator.get_paginated_response(pacientes_serializer.data)
+        
+        return Response(PacienteSerializer(pacientes, many=True).data)
+
+    def post(self, request):
+        paciente_serializer = PacienteSerializer(data=request.data)
+        if paciente_serializer.is_valid():
+            paciente_serializer.save()
+            return Response(paciente_serializer.data, status=status.HTTP_201_CREATED)
+        return Response({"message": "Erro ao criar Paciente."}, status=status.HTTP_400_BAD_REQUEST)
+    
+class PacienteDetail(APIView):
+    def get_object(self, pk):
+        try:
+            return Paciente.objects.get(pk = pk)
+        except Paciente.DoesNotExist:
+            raise Http404
+        
+    def get(self, request, pk):
+        paciente = self.get_object(pk)
+        serializer = PacienteSerializer(paciente)
+        return Response(serializer.data)
+    
+   
+    def put(self, request, pk):
+        paciente = self.get_object(pk)
+        serializer = PacienteSerializer(paciente, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        paciente = self.get_object(pk)
+        paciente.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 def is_medico_ou_estudante(user):
     return user.groups.filter(name__in=['Medico', 'Estudante']).exists()
 
@@ -21,7 +78,6 @@ def isAdministrador(user):
 @login_required
 @user_passes_test(is_medico_ou_estudante, login_url='/')
 def read(request):
-
     user = request.user
     medico = Medico.objects.get(pk=user.id)
 

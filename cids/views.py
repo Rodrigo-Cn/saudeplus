@@ -7,9 +7,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
 from .serializers import CidSerializer
 from .paginations import CidPagination
-from rest_framework import status
 
 def is_medico_ou_estudante(user):
     return user.groups.filter(name__in=['Medico', 'Estudante']).exists()
@@ -49,7 +49,7 @@ def home(request):
 
     return render(request, "cids/cids.html", context)
 
-class CidsList(APIView):
+class CidList(APIView):
 
     def get(self, request):
         codigo = request.query_params.get('codigo')
