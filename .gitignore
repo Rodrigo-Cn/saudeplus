@@ -1,6 +1,5 @@
 "__pycache__/" 
 "*.pyc" 
-"__pycache__/" 
-"*.pyc" 
+
 "db.sqlite3" 
-"db.sqlite3" 
+venv/
