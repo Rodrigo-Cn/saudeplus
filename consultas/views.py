@@ -13,6 +13,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import ConsultaSerializer
 from .paginations import ConsultaPagination
+from rest_framework.permissions import IsAuthenticated
+
+
 
 def is_medico_ou_estudante(user):
     return user.groups.filter(name__in=['Medico', 'Estudante']).exists()
@@ -113,7 +116,7 @@ def editar_receita(request, receita_id):
     return render(request, 'consultas/editReceita.html', {'form':form, 'medico':medico})
 
 class ConsultaList(APIView):
-
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         consultas = Consulta.objects.all()
         self.paginator = ConsultaPagination()
@@ -133,6 +136,7 @@ class ConsultaList(APIView):
         return Response({"message": "Erro ao criar Consulta."}, status=status.HTTP_400_BAD_REQUEST)
 
 class ConsultaViewDetail(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request, id):
         try:
             consulta = Consulta.objects.get(pk=id)

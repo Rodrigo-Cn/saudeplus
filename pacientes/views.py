@@ -17,6 +17,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import PacienteSerializer
 from .paginations import PacientePagination
+from rest_framework.permissions import IsAuthenticated
+
 
 class PacientesList(APIView):
     def get(self, request):
@@ -40,7 +42,8 @@ class PacientesList(APIView):
         if paciente_serializer.is_valid():
             paciente_serializer.save()
             return Response(paciente_serializer.data, status=status.HTTP_201_CREATED)
-        return Response({"message": "Erro ao criar Paciente."}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message": "Erro ao criar Paciente.", "errors": paciente_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
     
 class PacienteDetail(APIView):
     def get_object(self, pk):
