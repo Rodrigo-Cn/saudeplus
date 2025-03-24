@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import CidSerializer
 from .paginations import CidPagination
+from rest_framework.permissions import IsAuthenticated
 
 def is_medico_ou_estudante(user):
     return user.groups.filter(name__in=['Medico', 'Estudante']).exists()
@@ -50,7 +51,7 @@ def home(request):
     return render(request, "cids/cids.html", context)
 
 class CidList(APIView):
-
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         codigo = request.query_params.get('codigo')
         if codigo:
@@ -75,6 +76,7 @@ class CidList(APIView):
         return Response({"message": "Erro ao criar CID."}, status=status.HTTP_400_BAD_REQUEST)
 
 class CidViewDetail(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request, id):
         try:
             cid = Cid.objects.get(pk=id)

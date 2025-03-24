@@ -9,6 +9,8 @@ from rest_framework import status
 from .serializers import MedicamentoSerializer
 from .paginations import MedicamentoPagination
 from medicos.models import Medico
+from rest_framework.permissions import IsAuthenticated
+
 
 def is_medico_ou_estudante(user):
     return user.groups.filter(name__in=['Medico', 'Estudante']).exists()
@@ -41,6 +43,7 @@ def home(request):
     return render(request, "medicamentos/medicamentos.html", context)
 
 class MedicamentosList(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         nome = request.query_params.get('nome')
@@ -66,6 +69,7 @@ class MedicamentosList(APIView):
         return Response({"message": "Erro ao criar Medicamento."}, status=status.HTTP_400_BAD_REQUEST)
 
 class MedicamentoViewDetail(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, id):
         try:

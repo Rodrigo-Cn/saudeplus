@@ -8,6 +8,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import MedicoSerializer
 from .paginations import MedicoPagination
+from rest_framework.permissions import IsAuthenticated
+
 
 def is_medico_ou_estudante(user):
     return user.groups.filter(name__in=['Medico', 'Estudante']).exists()
@@ -40,6 +42,7 @@ def home(request):
     return render(request, "medicos/medicos.html", context)
 
 class MedicosList(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         nome = request.query_params.get('nome')
@@ -65,6 +68,9 @@ class MedicosList(APIView):
         return Response({"message": "Erro ao criar Médico."}, status=status.HTTP_400_BAD_REQUEST)
 
 class MedicoViewDetail(APIView):
+    
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, id):
         try:
             medico = Medico.objects.get(pk=id)

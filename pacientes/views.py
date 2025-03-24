@@ -17,6 +17,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import PacienteSerializer
 from .paginations import PacientePagination
+from rest_framework.permissions import IsAuthenticated
+
 
 class PacientesList(APIView):
     def get(self, request):
