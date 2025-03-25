@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'drf_spectacular',
     'rest_framework',
     'usuarios',
     'pacientes',
@@ -55,7 +56,8 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
-    )
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 SIMPLE_JWT = {
@@ -174,3 +176,10 @@ CACHES = {
 }
 
 SELECT2_CACHE_BACKEND = "default"
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'SaúdePlus',
+    'DESCRIPTION': 'API para persistir dados médicos',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
